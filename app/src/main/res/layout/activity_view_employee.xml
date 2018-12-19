@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".admin.AddEmployeeActivity">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+        <LinearLayout
+                android:id="@+id/view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:paddingBottom="40dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewEmployeeId_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/lastName"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewEmployeeId_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Employee Id"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewFirstName_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/firstName"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewFirstName_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="First Name"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewLastName_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/lastName"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewLastName_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Last Name"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewDOB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/dateOfBirth"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewDOB_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="DOB: 22/11/17"
+                        android:inputType="date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewRole_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/role"
+                        style="@style/body"/>
+
+                <Spinner
+                        android:id="@+id/roleSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewJobTitle_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/jobTitle"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewJobTitle_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Job Title"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/viewSalary_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/salary"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/viewSalary_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Salary (Rs.) per month"
+                        android:inputType="number"/>
+            </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/edit_employee_button"
+                    android:visibility="gone"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    style="@style/ButtonStyle"
+                    android:text="@string/edit" />
+
+            <Button
+                    android:id="@+id/delete_employee_button"
+                    android:visibility="gone"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    style="@style/ButtonStyle"
+                    android:text="@string/delete" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/add_employee_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    style="@style/ButtonStyle"
+                    android:text="@string/create" />
+            <Button
+                    android:id="@+id/saveChanges_employee_button"
+                    android:visibility="gone"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    style="@style/ButtonStyle"
+                    android:text="@string/save_changes" />
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <include
+            layout="@layout/progress_spinner"
+            android:visibility="gone"/>
+</LinearLayout>
