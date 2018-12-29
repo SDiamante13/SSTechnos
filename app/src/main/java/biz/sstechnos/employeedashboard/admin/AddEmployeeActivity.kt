@@ -15,11 +15,12 @@ import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_view_employee.*
+import org.koin.android.ext.android.inject
 
 
 class AddEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     private var roles = arrayOf(Role.ADMIN, Role.EMPLOYEE)
 

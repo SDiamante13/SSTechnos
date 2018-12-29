@@ -16,10 +16,11 @@ import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_contact_info.*
+import org.koin.android.ext.android.inject
 
 class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     private var relationships = arrayOf(
         Relationship.MOTHER,

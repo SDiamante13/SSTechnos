@@ -12,11 +12,12 @@ import biz.sstechnos.employeedashboard.registration.RegistrationActivity
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.android.ext.android.inject
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private val auth = FirebaseAuth.getInstance()
+    private val auth : FirebaseAuth by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

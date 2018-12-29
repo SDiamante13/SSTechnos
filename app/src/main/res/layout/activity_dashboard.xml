@@ -22,6 +22,51 @@
                     android:layout_weight="1">
 
                 <RelativeLayout
+                        android:id="@+id/employee_listings_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:layout_weight="0.55"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                    <TextView
+                            android:id="@+id/admin_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/admin"
+                            android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"/>
+
+                    <RelativeLayout android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true">
+
+                        <ImageView
+                                android:id="@+id/employee_listings_icon"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/icons8_user_male_250"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:padding="8dp"
+                                android:layout_centerHorizontal="true"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/employee_listings"
+                                android:textColor="@color/white"
+                                android:layout_centerHorizontal="true"
+                                android:textSize="14sp"
+                                android:layout_below="@id/employee_listings_icon"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
                         android:id="@+id/view_documents_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -29,6 +74,16 @@
                         android:layout_weight="0.65"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground">
+
+                    <TextView
+                            android:id="@+id/name_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="First Last"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="20sp"/>
 
                     <RelativeLayout
                             android:layout_width="match_parent"
@@ -56,11 +111,18 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
                 <RelativeLayout
-                        android:id="@+id/employee_listings_container"
+                        android:id="@+id/view_timesheets_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/darkViolet"
                         android:layout_weight="0.55"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground">
@@ -70,10 +132,10 @@
                                     android:layout_centerInParent="true">
 
                         <ImageView
-                                android:id="@+id/employee_listings_icon"
+                                android:id="@+id/view_timesheets_icon"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/icons8_user_male_250"
+                                android:src="@drawable/icons8_ok_250"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerInside"
                                 android:padding="8dp"
@@ -81,20 +143,15 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/employee_listings"
+                                android:text="@string/approve_timesheets"
                                 android:textColor="@color/white"
                                 android:layout_centerHorizontal="true"
                                 android:textSize="14sp"
-                                android:layout_below="@id/employee_listings_icon"/>
+                                android:layout_below="@id/view_timesheets_icon"/>
 
                     </RelativeLayout>
 
                 </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
 
                 <RelativeLayout
                         android:id="@+id/enter_timesheets_container"
@@ -131,81 +188,14 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-                <RelativeLayout
-                        android:id="@+id/view_timesheets_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/darkViolet"
-                        android:layout_weight="0.55"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackground">
-
-                    <RelativeLayout android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true">
-
-                        <ImageView
-                                android:id="@+id/view_timesheets_icon"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/icons8_ok_250"
-                                android:adjustViewBounds="true"
-                                android:scaleType="centerInside"
-                                android:padding="8dp"
-                                android:layout_centerHorizontal="true"/>
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/view_timesheets"
-                                android:textColor="@color/white"
-                                android:layout_centerHorizontal="true"
-                                android:textSize="14sp"
-                                android:layout_below="@id/view_timesheets_icon"/>
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                <RelativeLayout
-                        android:id="@+id/project_listings_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/colorPrimary"
-                        android:layout_weight="0.65"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackground">
 
-                    <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true">
-
-                        <ImageView
-                                android:id="@+id/project_listings_icon"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/icons8_toolbox_250"
-                                android:adjustViewBounds="true"
-                                android:scaleType="centerInside"
-                                android:padding="8dp"
-                                android:layout_centerHorizontal="true"/>
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/project_listings"
-                                android:textColor="@color/white"
-                                android:layout_centerHorizontal="true"
-                                android:textSize="14sp"
-                                android:layout_below="@id/project_listings_icon"/>
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
                 <RelativeLayout
                         android:id="@+id/upload_documents_container"
                         android:layout_width="match_parent"
@@ -239,6 +229,40 @@
 
                     </RelativeLayout>
 
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/project_listings_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:layout_weight="0.65"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                        <ImageView
+                                android:id="@+id/project_listings_icon"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/icons8_toolbox_250"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:padding="8dp"
+                                android:layout_centerHorizontal="true"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/project_listings"
+                                android:textColor="@color/white"
+                                android:layout_centerHorizontal="true"
+                                android:textSize="14sp"
+                                android:layout_below="@id/project_listings_icon"/>
+
+                    </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

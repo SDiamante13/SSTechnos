@@ -12,13 +12,14 @@ import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_registration.*
+import org.koin.android.ext.android.inject
 
 
 class RegistrationActivity : AppCompatActivity() {
 
     val handler : Handler = Handler()
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

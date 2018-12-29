@@ -12,6 +12,7 @@ import biz.sstechnos.employeedashboard.entity.Week
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_time_sheet.*
+import org.koin.android.ext.android.inject
 import java.lang.Double.parseDouble
 import java.text.DateFormatSymbols
 import java.util.*
@@ -19,7 +20,7 @@ import java.util.*
 
 class TimeSheetActivity : AppCompatActivity() {
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     private lateinit var employeeId : String
 

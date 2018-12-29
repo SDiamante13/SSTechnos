@@ -16,11 +16,12 @@ import biz.sstechnos.employeedashboard.entity.Role
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_view_employee.*
 import kotlinx.android.synthetic.main.progress_spinner.*
+import org.koin.android.ext.android.inject
 
 
 class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     private lateinit var employeeId : String
     private var roles = arrayOf(Role.ADMIN, Role.EMPLOYEE)

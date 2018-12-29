@@ -12,12 +12,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_account_creation.*
+import org.koin.android.ext.android.inject
 
 
 class AccountCreationActivity : AppCompatActivity() {
 
-    private val auth = FirebaseAuth.getInstance()
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val auth : FirebaseAuth by inject()
+    private val databaseReference : DatabaseReference by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

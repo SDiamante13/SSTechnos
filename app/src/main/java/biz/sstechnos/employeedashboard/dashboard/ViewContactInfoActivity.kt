@@ -8,10 +8,11 @@ import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.ContactInfo
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_view_contact_info.*
+import org.koin.android.ext.android.inject
 
 class ViewContactInfoActivity : AppCompatActivity() {
 
-    private val databaseReference = FirebaseDatabase.getInstance().reference
+    private val databaseReference : DatabaseReference by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
