@@ -8,27 +8,33 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.RelativeLayout
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.admin.EmployeeListingsActivity
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.progress_spinner.*
 import org.koin.android.ext.android.inject
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
-    private val auth : FirebaseAuth by inject()
-    private val databaseReference : DatabaseReference by inject()
+    private val databaseReference : DatabaseReference by inject("databaseReference")
 
     var employeeList = mutableListOf<Employee>()
 
-    private lateinit var user: FirebaseUser
+    lateinit var userEmail : String
+
+    lateinit var employeeListingsContainer : RelativeLayout
+    lateinit var viewTimeSheetsContainer : RelativeLayout
+    lateinit var uploadDocumentsContainer : RelativeLayout
+    lateinit var enterTimesheetsContainer : RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +43,17 @@ class DashboardActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        userEmail = intent.getStringExtra("USER_EMAIL")
+
         progress_spinner.visibility = VISIBLE
+        top_view.visibility = GONE
 
-        user = auth.currentUser!!
+        employeeListingsContainer = employee_listings_container
+        viewTimeSheetsContainer = view_timesheets_container
+        uploadDocumentsContainer = upload_documents_container
+        enterTimesheetsContainer = enter_timesheets_container
 
-        loadAllEmployees()
-
-        progress_spinner.visibility = GONE
+        databaseReference.child("employees").addValueEventListener(this)
 
         //   Admin Buttons
         employee_listings_container.setOnClickListener {
@@ -74,55 +84,56 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadAllEmployees() {
-        val employeeListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var employeeId = "UNDEFINED"
-                var role = Role.EMPLOYEE
-                var firstName = ""
-                var lastName = ""
+    override fun onDataChange(dataSnapshot : DataSnapshot?) {
+        var employeeId = "UNDEFINED"
+        var role = Role.EMPLOYEE
+        var firstName = ""
+        var lastName = ""
 
-                dataSnapshot.children.forEach { singleSnapshot ->
-                    var employeeSnapshot = singleSnapshot.getValue<Employee>(Employee::class.java)!!
-                    employeeList.add(employeeSnapshot)
+        for(singleSnapshot in dataSnapshot!!.children) {
+            var employeeSnapshot = singleSnapshot.getValue<Employee>(Employee::class.java)!!
+            employeeList.add(employeeSnapshot)
 
-                    if (user.email.equals(employeeSnapshot.username)) {
-                        employeeId = employeeSnapshot.employeeId
-                        firstName = employeeSnapshot.firstName
-                        lastName = employeeSnapshot.lastName
-                        role = employeeSnapshot.role
-                    }
-                }
-                if (employeeId.isNotEmpty()) {
-                    if (role == Role.EMPLOYEE) {
-                        employee_listings_container.visibility = GONE
-                        view_timesheets_container.visibility = GONE
-                        upload_documents_container.visibility = GONE
-                    }
-
-                    name_header.text = "$firstName $lastName"
-
-                    getSharedPreferences("Employee", MODE_PRIVATE)
-                        .edit()
-                        .putString("employeeId", employeeId)
-                        .apply()
-
-                    Log.d("SSTechnos", "Employee: $firstName $lastName $employeeId $role")
-
-                    val jsonEmployeeList = Gson().toJson(employeeList)
-
-                    getSharedPreferences("EmployeeList", MODE_PRIVATE)
-                        .edit()
-                        .putString("employeeList", jsonEmployeeList)
-                        .apply()
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Employee failed, log a message
-                Log.w("SSTechnos", "loadEmployee:onCancelled", databaseError.toException())
+            if (userEmail.equals(employeeSnapshot.username)) {
+                employeeId = employeeSnapshot.employeeId
+                firstName = employeeSnapshot.firstName
+                lastName = employeeSnapshot.lastName
+                role = employeeSnapshot.role
             }
         }
-        databaseReference.child("employees").addValueEventListener(employeeListener)
+        if (employeeId.isNotEmpty()) {
+            if (role == Role.EMPLOYEE) {
+                employeeListingsContainer.visibility = GONE
+                viewTimeSheetsContainer.visibility = GONE
+                uploadDocumentsContainer.visibility = GONE
+            }
+
+            name_header.text = "$firstName $lastName"
+
+            getSharedPreferences("Employee", MODE_PRIVATE)
+                .edit()
+                .putString("employeeId", employeeId)
+                .apply()
+
+            Log.d("SSTechnos", "Employee: $firstName $lastName $employeeId $role")
+
+            val jsonEmployeeList = Gson().toJson(employeeList)
+
+            getSharedPreferences("EmployeeList", MODE_PRIVATE)
+                .edit()
+                .putString("employeeList", jsonEmployeeList)
+                .apply()
+
+            progress_spinner.visibility = GONE
+            top_view.visibility = VISIBLE
+        }
+    }
+
+    override fun onCancelled(databaseError : DatabaseError?) {
+        // Getting Employee failed, log a message
+        progress_spinner.visibility = GONE
+        top_view.visibility = VISIBLE
+        Log.w("SSTechnos", "loadEmployee:onCancelled", databaseError?.toException())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

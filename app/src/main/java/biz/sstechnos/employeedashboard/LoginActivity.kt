@@ -10,14 +10,18 @@ import android.widget.EditText
 import biz.sstechnos.employeedashboard.dashboard.DashboardActivity
 import biz.sstechnos.employeedashboard.registration.RegistrationActivity
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), OnCompleteListener<AuthResult> {
 
-    private val auth : FirebaseAuth by inject()
+    private val auth : FirebaseAuth by inject(name = "firebaseAuth")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,25 +34,7 @@ class LoginActivity : AppCompatActivity() {
                     "Login attempt failed!",
                     "Username and password required.").show()
             } else {
-                auth.signInWithEmailAndPassword(username_editText.text.toString(), password_editText.text.toString())
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Log.d("SSTechnos", "signInWithEmail:success")
-                            val user = auth.currentUser
-                            if(user!!.isEmailVerified) {
-                                startActivity(Intent(this, DashboardActivity::class.java))
-                            } else {
-                                CookieBarUtil.makeCookie(this@LoginActivity,
-                                    "Login attempt unsuccessful!",
-                                    "Email is not verified.").show()
-                            }
-                        } else {
-                            Log.w("SSTechnos", "signInWithEmail:failure", task.exception)
-                            CookieBarUtil.makeCookie(this@LoginActivity,
-                                "Login attempt failed!",
-                                "Please provide the correct credentials.").show()
-                        }
-                    }
+                auth.signInWithEmailAndPassword(username_editText.text.toString(), password_editText.text.toString()).addOnCompleteListener(this)
             }
         }
 
@@ -80,6 +66,25 @@ class LoginActivity : AppCompatActivity() {
             }
 
             builder.create().show()
+        }
+    }
+
+    override fun onComplete(task: Task<AuthResult>) {
+        if(task.isSuccessful) {
+            Log.d("SSTechnos", "signInWithEmail:success")
+            val user = task.result.user
+            if(user!!.isEmailVerified) {
+                startActivity(Intent(this, DashboardActivity::class.java).putExtra("USER_EMAIL", user.email))
+            } else {
+                CookieBarUtil.makeCookie(this@LoginActivity,
+                    "Login attempt unsuccessful!",
+                    "Email is not verified.").show()
+            }
+        } else {
+            Log.w("SSTechnos", "signInWithEmail:failure", task.exception)
+            CookieBarUtil.makeCookie(this@LoginActivity,
+                "Login attempt failed!",
+                "Please provide the correct credentials.").show()
         }
     }
 }
