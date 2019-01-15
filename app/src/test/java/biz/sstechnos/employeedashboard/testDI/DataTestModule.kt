@@ -6,6 +6,6 @@ import io.mockk.mockk
 import org.koin.dsl.module.module
 
 val dataTestModule = module {
-    factory("mockFirebaseAuth") { mockk<FirebaseAuth>(relaxed = true) }
-    factory("mockDatabaseReference") { mockk<DatabaseReference>(relaxed = true) }
+    single("mockFirebaseAuth") { mockk<FirebaseAuth>(relaxed = true) }
+    single("mockDatabaseReference") { mockk<DatabaseReference>(relaxed = true) }
 }

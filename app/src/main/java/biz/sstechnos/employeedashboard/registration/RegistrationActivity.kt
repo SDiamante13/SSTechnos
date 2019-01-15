@@ -1,6 +1,5 @@
 package biz.sstechnos.employeedashboard.registration
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,16 +9,19 @@ import android.view.MenuItem
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_registration.*
 import org.koin.android.ext.android.inject
 
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationActivity : AppCompatActivity(), ValueEventListener {
 
-    val handler : Handler = Handler()
+    val handler: Handler = Handler()
 
-    private val databaseReference : DatabaseReference by inject()
+    private val databaseReference: DatabaseReference by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,54 +32,73 @@ class RegistrationActivity : AppCompatActivity() {
 
         validate_button.setOnClickListener {
 
-            if(employeeId_editText.text.toString().isEmpty() ||
+            if (employeeId_editText.text.toString().isEmpty() ||
                 lastName_editText.text.toString().isEmpty() ||
-                dateOfBirth_editText.text.toString().isEmpty()) {
-                CookieBarUtil.makeCookie(this@RegistrationActivity,
+                dateOfBirth_editText.text.toString().isEmpty()
+            ) {
+                CookieBarUtil.makeCookie(
+                    this@RegistrationActivity,
                     "Employee information required!",
-                    "Please fill out all requested fields.").show()
+                    "Please fill out all requested fields."
+                ).show()
             } else {
-                Log.d("SSTechnos", "Employee: ${employeeId_editText.text} ${lastName_editText.text} ${dateOfBirth_editText.text}")
-                verifyEmployeeInfo(employeeId_editText.text.toString(), lastName_editText.text.toString(), dateOfBirth_editText.text.toString())
+                Log.d(
+                    "SSTechnos",
+                    "Employee: ${employeeId_editText.text} ${lastName_editText.text} ${dateOfBirth_editText.text}"
+                )
+                databaseReference.addValueEventListener(this)
             }
         }
-
-
-    }
-
-    private fun verifyEmployeeInfo(employeeId: String, lastName: String, dateOfBirth: String) {
-        val verifyEmployeeListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var employee = dataSnapshot.child("employees").child(employeeId).getValue(Employee::class.java)!!
-                Log.d("SSTechnos", "Employee: ${employee.employeeId} ${employee.lastName} ${employee.dateOfBirth}")
-                if(employee.lastName == lastName && employee.dateOfBirth == dateOfBirth) {
-                    getSharedPreferences("Employee", MODE_PRIVATE)
-                        .edit()
-                        .putString("employeeId", employeeId)
-                        .apply()
-                    CookieBarUtil.makeCookie(this@RegistrationActivity,
-                        "Account successfully linked!",
-                        "Your account has been verified." +
-                        " Please proceed to the next account creation form.").show()
-                    handler.postDelayed({ startActivity(Intent(this@RegistrationActivity, ContactInfoActivity::class.java)) }, 7000)
-                } else {
-                    CookieBarUtil.makeCookie(this@RegistrationActivity,
-                        "Invalid Account!",
-                        "Employee account does not exist." +
-                                " Please try again or consult with your manager.").show()
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Employee failed, log a message
-                Log.w("SSTechnos", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        databaseReference.addValueEventListener(verifyEmployeeListener)
     }
 
     override fun onPause() {
         super.onPause()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onDataChange(dataSnapshot: DataSnapshot?) {
+        val employeeId = employeeId_editText.text.toString()
+        val lastName = lastName_editText.text.toString()
+        val dateOfBirth = dateOfBirth_editText.text.toString()
+
+        if (dataSnapshot != null) {
+            var employee: Employee? = dataSnapshot.child("employees").child(employeeId).getValue(Employee::class.java)
+            if (employee != null) {
+                Log.d("SSTechnos", "Employee: ${employee.employeeId} ${employee.lastName} ${employee.dateOfBirth}")
+                if (employee.lastName == lastName && employee.dateOfBirth == dateOfBirth) {
+                    getSharedPreferences("Employee", MODE_PRIVATE)
+                        .edit()
+                        .putString("employeeId", employeeId)
+                        .apply()
+                    CookieBarUtil.makeCookie(
+                        this@RegistrationActivity,
+                        "Account successfully linked!",
+                        "Your account has been verified." +
+                                " Please proceed to the next account creation form."
+                    ).show()
+                    handler.postDelayed({
+                        startActivity(
+                            Intent(
+                                this@RegistrationActivity,
+                                ContactInfoActivity::class.java
+                            )
+                        )
+                    }, 7000)
+                } else {
+                    CookieBarUtil.makeCookie(
+                        this@RegistrationActivity,
+                        "Invalid Account!",
+                        "Employee account does not exist." +
+                                " Please try again or consult with your manager."
+                    ).show()
+                }
+            }
+        }
+    }
+
+    override fun onCancelled(databaseError: DatabaseError) {
+        // Getting Employee failed, log a message
+        Log.w("SSTechnos", "loadPost:onCancelled", databaseError.toException())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

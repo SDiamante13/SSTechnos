@@ -1,12 +1,12 @@
 package biz.sstechnos.employeedashboard
 
-import android.app.Application
+import biz.sstechnos.employeedashboard.testDI.dataTestModule
 import org.koin.android.ext.android.startKoin
 
-class SSTTestApplication : Application() {
+class SSTTestApplication : SSTApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, emptyList())
+        startKoin(this, listOf(dataTestModule))
     }
 }

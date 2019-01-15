@@ -9,6 +9,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.dashboard.DashboardActivity
+import biz.sstechnos.employeedashboard.registration.RegistrationActivity
 import biz.sstechnos.employeedashboard.testDI.dataTestModule
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -41,6 +42,7 @@ class LoginActivityTest : KoinTest {
     fun setUp() {
         loadKoinModules(dataTestModule)
         mockUser = mockk(relaxed = true)
+        mockTask = mockk(relaxed = true)
         scenario = launch(LoginActivity::class.java)
     }
 
@@ -87,5 +89,13 @@ class LoginActivityTest : KoinTest {
         closeSoftKeyboard()
 
         onView(withId(R.id.signIn_button)).perform(click())
+    }
+
+    @Test
+    fun `clicking on Register Button launches RegistrationActivity`() {
+        init()
+        onView(withId(R.id.register_button)).perform(click())
+        intended(hasComponent(RegistrationActivity::class.java.canonicalName))
+        release()
     }
 }

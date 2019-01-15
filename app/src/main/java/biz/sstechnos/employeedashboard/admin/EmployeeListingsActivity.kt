@@ -32,7 +32,7 @@ class EmployeeListingsActivity : AppCompatActivity() {
         employee_list_view.layoutManager = LinearLayoutManager(baseContext)
 
         // Access the RecyclerView Adapter and load the data into it
-        employee_list_view.adapter = EmployeeAdapter(employeeNameList, baseContext)
+        employee_list_view.adapter = EmployeeAdapter(employeeNameList)
 
 
         add_employee.setOnClickListener {
@@ -41,7 +41,7 @@ class EmployeeListingsActivity : AppCompatActivity() {
     }
 
     private fun retrieveEmployeeList(): MutableList<Employee> {
-        var employeeListJson = getSharedPreferences("EmployeeList", MODE_PRIVATE)
+        var employeeListJson : String? = getSharedPreferences("EmployeeList", MODE_PRIVATE)
             .getString("employeeList", " ")
         return Gson().fromJson(employeeListJson, object : TypeToken<MutableList<Employee>>() {}.type)
     }

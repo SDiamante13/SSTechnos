@@ -5,7 +5,7 @@ import biz.sstechnos.employeedashboard.di.dataModule
 import org.koin.android.ext.android.startKoin
 
 
-class SSTApplication : Application() {
+open class SSTApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
