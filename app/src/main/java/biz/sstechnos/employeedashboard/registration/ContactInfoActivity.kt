@@ -2,6 +2,8 @@ package biz.sstechnos.employeedashboard.registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -13,12 +15,15 @@ import biz.sstechnos.employeedashboard.entity.ContactInfo
 import biz.sstechnos.employeedashboard.entity.EmergencyContact
 import biz.sstechnos.employeedashboard.entity.Relationship
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
+import com.google.android.gms.common.api.Result
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_contact_info.*
 import org.koin.android.ext.android.inject
 
-class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, OnCompleteListener<Void> {
 
     private val databaseReference : DatabaseReference by inject()
 
@@ -42,7 +47,6 @@ class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_info)
         supportActionBar?.title = "Contact Info Form"
-
         setUpRelationshipSpinnerAdapter()
 
         submit_button.setOnClickListener {
@@ -80,12 +84,21 @@ class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
                 val employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
                     .getString("employeeId", " ")
-                databaseReference.child("employees").child(employeeId).child("ContactInfo").setValue(contactInfo)
-                    .addOnSuccessListener { Log.d("SSTechnos", "Employee's contact info successfully added..") }
-                    .addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
-                startActivity(Intent(applicationContext, UploadIdCardActivity::class.java))
-                finish()
+
+                databaseReference.child("employees").child(employeeId).child("ContactInfo").setValue(contactInfo).addOnCompleteListener(this)
             }
+        }
+    }
+
+    override fun onComplete(task: Task<Void>) {
+        if(task.isSuccessful) {
+            Log.d("SSTechnos", "Employee's contact info successfully added..")
+            startActivity(Intent(applicationContext, UploadIdCardActivity::class.java))
+        } else {
+            Log.d("SSTechnos", "" + task.exception)
+            CookieBarUtil.makeCookie(this@ContactInfoActivity,
+                "Upload failed!",
+                "Failed to upload your contact info. Please try again.").show()
         }
     }
 
@@ -116,4 +129,4 @@ class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
     }
 
-    }
+}

@@ -68,4 +68,6 @@ dependencies {
     testImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
     testImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
+
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
 }

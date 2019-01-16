@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.dashboard.DashboardActivity
 import biz.sstechnos.employeedashboard.registration.RegistrationActivity
-import biz.sstechnos.employeedashboard.testDI.dataTestModule
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -21,15 +20,15 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext.loadKoinModules
 import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
 import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest : KoinTest {
 
-    private val auth : FirebaseAuth by inject(name = "mockFirebaseAuth")
+    private val mockFirebaseAuth = mockk<FirebaseAuth>(relaxed = true)
 
     private lateinit var scenario : ActivityScenario<LoginActivity>
     private lateinit var mockTask : Task<AuthResult>
@@ -40,7 +39,9 @@ class LoginActivityTest : KoinTest {
 
     @Before
     fun setUp() {
-        loadKoinModules(dataTestModule)
+        loadKoinModules(module(override = true) {
+            single("fireBaseAuth") { mockFirebaseAuth }
+        })
         mockUser = mockk(relaxed = true)
         mockTask = mockk(relaxed = true)
         scenario = launch(LoginActivity::class.java)
@@ -79,7 +80,7 @@ class LoginActivityTest : KoinTest {
 
         scenario.onActivity { activity -> activity.onComplete(mockTask) }
 
-        //TODO find out how to assert that CookieBar Showed
+        //TODO find out how to assert that CookieBar Showed SEE ContactInfoTest
 //        onView(withClassName()).check(matches(isDisplayed()))
     }
 

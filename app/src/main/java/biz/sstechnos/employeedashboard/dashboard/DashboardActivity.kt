@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 
 class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
-    private val databaseReference : DatabaseReference by inject("databaseReference")
+    private val databaseReference : DatabaseReference by inject()
 
     var employeeList = mutableListOf<Employee>()
 

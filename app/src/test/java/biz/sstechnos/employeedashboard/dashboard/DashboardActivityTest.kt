@@ -13,9 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.LoginActivity
 import biz.sstechnos.employeedashboard.admin.EmployeeListingsActivity
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
-import biz.sstechnos.employeedashboard.testDI.dataTestModule
 import com.google.common.truth.Truth.assertThat
-import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import io.mockk.mockk
@@ -23,16 +21,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext.loadKoinModules
 import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
 import org.koin.test.KoinTest
 
 
 @RunWith(AndroidJUnit4::class)
 class DashboardActivityTest : KoinTest{
 
-    private val database : DatabaseReference by inject("mockDatabaseReference")
+    private val mockDatabaseReference = mockk<DatabaseReference>(relaxed = true)
     private lateinit var mockDataSnapshot : DataSnapshot
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
@@ -43,8 +41,9 @@ class DashboardActivityTest : KoinTest{
 
     @Before
     fun setUp() {
-        loadKoinModules(dataTestModule)
-        FirebaseApp.initializeApp(context)
+        loadKoinModules(module(override = true) {
+            single("databaseReference") { mockDatabaseReference }
+        })
 
         mockDataSnapshot = mockk(relaxed = true)
 
