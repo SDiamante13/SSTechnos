@@ -21,7 +21,7 @@ import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity(), OnCompleteListener<AuthResult> {
 
-    private val auth : FirebaseAuth by inject(name = "firebaseAuth")
+    private val auth : FirebaseAuth by inject(name = "fireBaseAuth")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

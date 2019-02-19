@@ -3,10 +3,10 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/employee_container">
+              android:id="@+id/document_container">
 
     <TextView
-            android:id="@+id/employee_member"
+            android:id="@+id/document_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

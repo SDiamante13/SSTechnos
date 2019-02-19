@@ -1,7 +1,6 @@
 package biz.sstechnos.employeedashboard.admin
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
@@ -13,7 +12,6 @@ import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_view_employee.*
 import org.koin.android.ext.android.inject
 
@@ -37,22 +35,16 @@ class AddEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         add_employee_button.setOnClickListener {
             if(allFieldsValid()) {
                 addEmployee()
-                CookieBarUtil.makeCookie(this@AddEmployeeActivity,
+                CookieBarUtil.makeCookie(this@AddEmployeeActivity, //TODO remove if too fast or change to toast
                     "Employee Added!",
-                    "You've added a new employee to the database." +
-                            " They will be able to register and create an account for themselves.").show()
-                Handler().postDelayed({ finish() }, 7000)
+                    "You've added a new employee to the database.").show()
+                finish()
             } else {
                 CookieBarUtil.makeCookie(this@AddEmployeeActivity,
                     "Missing Fields!",
                     "Please fill out all required fields.").show()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     private fun setUpSpinnerAdapter() {
@@ -72,9 +64,11 @@ class AddEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             viewDOB_editText.text.toString(),
             selectedRole,
             viewJobTitle_editText.text.toString(),
-            viewSalary_editText.text.toString().toDouble(), "")
+            viewSalary_editText.text.toString(), "")
 
-        databaseReference.child("employees").child(employee.employeeId).setValue(employee).addOnSuccessListener { Log.d("SSTechnos", "Employee saved successfully to the database.") }.addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
+        databaseReference.child("employees").child(employee.employeeId).setValue(employee)
+            .addOnSuccessListener { Log.d("SSTechnos", "Employee saved successfully to the database.") }
+            .addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
     }
 
     private fun allFieldsValid() : Boolean {

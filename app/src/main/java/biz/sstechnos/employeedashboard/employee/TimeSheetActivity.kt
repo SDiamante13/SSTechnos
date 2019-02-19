@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Timesheet
@@ -36,9 +37,9 @@ class TimeSheetActivity : AppCompatActivity() {
 
         val todaysDate = Calendar.getInstance()
         val months = DateFormatSymbols().months
-        val monthIndex = todaysDate.get(Calendar.MONTH)
+        var monthIndex = todaysDate.get(Calendar.MONTH)
         val year = todaysDate.get(Calendar.YEAR)
-        val timesheetId = "M${monthIndex+1}Y${year-2000}"
+        var timesheetId = "M${monthIndex+1}Y${year-2000}"
 
         month.text = months[monthIndex]
 
@@ -56,11 +57,35 @@ class TimeSheetActivity : AppCompatActivity() {
         }
 
         timesheet_submitButton.setOnClickListener {
-            sendEmail("email", "pass")
         }
 
+        leftArrow_button.setOnClickListener {
+            if(monthIndex > 0) {
+                monthIndex--
+                timesheetId = "M${monthIndex + 1}Y${year - 2000}"
+                month.text = months[monthIndex]
+                loadTimesheet(timesheetId)
+                hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex, todaysDate)
+            }
+        }
 
+        rightArrow_button.setOnClickListener {
+            if(monthIndex < 12) {
+                monthIndex++
+                timesheetId = "M${monthIndex + 1}Y${year - 2000}"
+                month.text = months[monthIndex]
+                loadTimesheet(timesheetId)
+                hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex, todaysDate)
+            }
+        }
+    }
 
+    private fun hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex: Int, todaysDate: Calendar) {
+        if (monthIndex != todaysDate.get(Calendar.MONTH)) {
+            rightArrow_button.visibility = View.VISIBLE
+        } else {
+            rightArrow_button.visibility = View.GONE
+        }
     }
 
     private fun loadTimesheet(timesheetId : String) {
@@ -70,6 +95,8 @@ class TimeSheetActivity : AppCompatActivity() {
                 var timesheetSnapshot : Timesheet? = dataSnapshot.child("timesheets").child(employeeId).child(timesheetId).getValue(Timesheet::class.java)
                 if (timesheetSnapshot != null) {
                     populateTimesheet(timesheetSnapshot)
+                } else {
+                    emptyOutTimesheet()
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
@@ -78,6 +105,40 @@ class TimeSheetActivity : AppCompatActivity() {
 
         }
         databaseReference.addValueEventListener(loadTimesheetListener)
+    }
+
+    private fun emptyOutTimesheet() {
+        week1_monday.text = 0.0.toEditable()
+        week1_tuesday.text = 0.0.toEditable()
+        week1_wednesday.text = 0.0.toEditable()
+        week1_thursday.text = 0.0.toEditable()
+        week1_friday.text = 0.0.toEditable()
+        week1_saturday.text = 0.0.toEditable()
+        week1_sunday.text = 0.0.toEditable()
+
+        week2_monday.text = 0.0.toEditable()
+        week2_tuesday.text = 0.0.toEditable()
+        week2_wednesday.text = 0.0.toEditable()
+        week2_thursday.text = 0.0.toEditable()
+        week2_friday.text = 0.0.toEditable()
+        week2_saturday.text = 0.0.toEditable()
+        week2_sunday.text = 0.0.toEditable()
+
+        week3_monday.text = 0.0.toEditable()
+        week3_tuesday.text = 0.0.toEditable()
+        week3_wednesday.text = 0.0.toEditable()
+        week3_thursday.text = 0.0.toEditable()
+        week3_friday.text = 0.0.toEditable()
+        week3_saturday.text = 0.0.toEditable()
+        week3_sunday.text = 0.0.toEditable()
+
+        week4_monday.text = 0.0.toEditable()
+        week4_tuesday.text = 0.0.toEditable()
+        week4_wednesday.text = 0.0.toEditable()
+        week4_thursday.text = 0.0.toEditable()
+        week4_friday.text = 0.0.toEditable()
+        week4_saturday.text = 0.0.toEditable()
+        week4_sunday.text = 0.0.toEditable()
     }
 
     private fun populateTimesheet(timesheetSnapshot: Timesheet) {
@@ -236,29 +297,6 @@ class TimeSheetActivity : AppCompatActivity() {
             weekList)
         return timesheet
     }
-
-    private fun sendEmail(email : String, password : String) {
-//        BackgroundMail.newBuilder(this)
-//    .withUsername(admin.)
-//    .withPassword(password)
-//    .withSenderName("Steven D")
-//    .withMailTo("steven4@vt.edu")
-//    .withType(BackgroundMail.TYPE_PLAIN)
-//    .withSubject("This is a test email")
-//    .withBody("This is a test ")
-//    .withSendingMessage(R.string.sending_email)
-//    .withOnSuccessCallback(object : BackgroundMail.OnSendingCallback {
-//        override fun onSuccess() {
-//            Log.d("SSTechnos", "Email sent successfully!!!")
-//        }
-//
-//        override fun onFail(e: Exception) {
-//            Log.d("SSTechnos", "${e.message}")
-//
-//        }
-//    })
-//    .send()
-}
 
     private fun Double.toEditable() : Editable = Editable.Factory.getInstance().newEditable(this.toString())
 

@@ -9,5 +9,5 @@ data class Employee(val employeeId : String = "",
                     val dateOfBirth : String = "",
                     val role : Role = Role.EMPLOYEE,
                     var jobTitle : String = "",
-                    var salary : Double = 0.0,
+                    var salary : String = "",
                     var username : String? = "")

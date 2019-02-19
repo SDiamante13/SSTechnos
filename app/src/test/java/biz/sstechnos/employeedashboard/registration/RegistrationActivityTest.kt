@@ -6,7 +6,11 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents.*
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Employee
@@ -46,7 +50,7 @@ class RegistrationActivityTest : KoinTest {
             "16/05/1923",
             Role.EMPLOYEE,
             "Detective",
-            20000.00,
+            "20000",
             "")
 
         every { mockDataSnapshot.child(any()) } returns mockDataSnapshot
@@ -62,16 +66,9 @@ class RegistrationActivityTest : KoinTest {
         // FIXME Find out how to type a number into an editText using espresso
         onView(withId(R.id.dateOfBirth_editText)).perform(ViewActions.typeText("16/05/1923"))
 
-        // TODO this passes but I have no way to accurately assert. Handler is sleeping 7 secs before transistion to next activity
-        // TODO Cannot find a way to check if Cookiebar is being shown
-//        init()
-//        scenario.onActivity { activity -> activity.onDataChange(mockDataSnapshot) }
-//        intended(hasComponent(ContactInfoActivity::class.java.canonicalName))
-//        release()
-//        onView(withText("Account successfully linked!")).check(matches(isDisplayed()))
-//        onView(withText("Account successfully linked!"))
-//            .check(matches(withEffectiveVisibility(
-//                ViewMatchers.Visibility.VISIBLE
-//            )))
+        init()
+        scenario.onActivity { activity -> activity.onDataChange(mockDataSnapshot) }
+        intended(hasComponent(ContactInfoActivity::class.java.canonicalName))
+        release()
     }
 }

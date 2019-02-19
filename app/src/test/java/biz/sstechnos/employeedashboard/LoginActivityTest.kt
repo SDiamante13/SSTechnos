@@ -4,8 +4,11 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.dashboard.DashboardActivity
@@ -81,7 +84,8 @@ class LoginActivityTest : KoinTest {
         scenario.onActivity { activity -> activity.onComplete(mockTask) }
 
         //TODO find out how to assert that CookieBar Showed SEE ContactInfoTest
-//        onView(withClassName()).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_title)).check(matches(ViewMatchers.withText("Login attempt unsuccessful!")))
+
     }
 
     @Test
@@ -90,6 +94,7 @@ class LoginActivityTest : KoinTest {
         closeSoftKeyboard()
 
         onView(withId(R.id.signIn_button)).perform(click())
+        onView(withId(R.id.tv_title)).check(matches(ViewMatchers.withText("Login attempt failed!")))
     }
 
     @Test

@@ -5,7 +5,6 @@ import com.google.common.truth.Truth.assertThat
 
 class EmployeeListingsActivityTest {
 
-
     @Before
     fun setUp() {
     }

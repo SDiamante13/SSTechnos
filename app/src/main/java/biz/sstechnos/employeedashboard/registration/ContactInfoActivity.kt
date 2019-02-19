@@ -94,6 +94,7 @@ class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         if(task.isSuccessful) {
             Log.d("SSTechnos", "Employee's contact info successfully added..")
             startActivity(Intent(applicationContext, UploadIdCardActivity::class.java))
+            finish()
         } else {
             Log.d("SSTechnos", "" + task.exception)
             CookieBarUtil.makeCookie(this@ContactInfoActivity,

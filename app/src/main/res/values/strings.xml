@@ -44,4 +44,6 @@
     <string name="upload_photo">Upload Profile Picture</string>
     <string name="approve_timesheets">Approve Timesheets</string>
     <string name="admin">Admin</string>
+    <string name="employeeId">Employee Id:</string>
+    <string name="upload_new_document">Upload New Document</string>
 </resources>

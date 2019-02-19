@@ -5,6 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:orientation="vertical"
         tools:context=".registration.UploadIdCardActivity">
 
@@ -15,8 +17,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             style="@style/body" />
 
     <LinearLayout
@@ -29,20 +29,23 @@
                 android:layout_height="wrap_content"
                 android:text="Upload document 1"
                 style="@style/body"/>
-        <EditText
-                android:id="@+id/upload_document1"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:inputType="textUri"/>
         <Button
                 android:id="@+id/upload_button1"
-                android:layout_width="60dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="..."
+                android:text="Take Photo"
                 style="@style/ButtonStyle"/>
     </LinearLayout>
+
+    <ImageView
+            android:id="@+id/document1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="48dp"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -56,28 +59,31 @@
                 android:layout_height="wrap_content"
                 android:text="Upload Document 2"
                 style="@style/body"/>
-        <EditText
-                android:id="@+id/upload_document2"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:inputType="textUri"/>
         <Button
                 android:id="@+id/upload_button2"
-                android:layout_width="60dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="..."
+                android:text="Take Photo"
                 style="@style/ButtonStyle"/>
     </LinearLayout>
 
+    <ImageView
+            android:id="@+id/document2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"/>
+
     <Button
             android:id="@+id/submit_button"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="0dp"
             android:layout_marginTop="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
             style="@style/ButtonStyle"/>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".admin.UploadDocumentsActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/add_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/bodyCasualBold"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:paddingBottom="25dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="25dp"
+                android:textAllCaps="true"
+                android:text="@string/upload_new_document" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/document_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/employee_list_item">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

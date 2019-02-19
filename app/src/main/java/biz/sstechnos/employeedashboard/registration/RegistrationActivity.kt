@@ -2,7 +2,6 @@ package biz.sstechnos.employeedashboard.registration
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
@@ -18,8 +17,6 @@ import org.koin.android.ext.android.inject
 
 
 class RegistrationActivity : AppCompatActivity(), ValueEventListener {
-
-    val handler: Handler = Handler()
 
     private val databaseReference: DatabaseReference by inject()
 
@@ -51,11 +48,6 @@ class RegistrationActivity : AppCompatActivity(), ValueEventListener {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacksAndMessages(null)
-    }
-
     override fun onDataChange(dataSnapshot: DataSnapshot?) {
         val employeeId = employeeId_editText.text.toString()
         val lastName = lastName_editText.text.toString()
@@ -65,25 +57,14 @@ class RegistrationActivity : AppCompatActivity(), ValueEventListener {
             var employee: Employee? = dataSnapshot.child("employees").child(employeeId).getValue(Employee::class.java)
             if (employee != null) {
                 Log.d("SSTechnos", "Employee: ${employee.employeeId} ${employee.lastName} ${employee.dateOfBirth}")
+
                 if (employee.lastName == lastName && employee.dateOfBirth == dateOfBirth) {
                     getSharedPreferences("Employee", MODE_PRIVATE)
                         .edit()
                         .putString("employeeId", employeeId)
                         .apply()
-                    CookieBarUtil.makeCookie(
-                        this@RegistrationActivity,
-                        "Account successfully linked!",
-                        "Your account has been verified." +
-                                " Please proceed to the next account creation form."
-                    ).show()
-                    handler.postDelayed({
-                        startActivity(
-                            Intent(
-                                this@RegistrationActivity,
-                                ContactInfoActivity::class.java
-                            )
-                        )
-                    }, 7000)
+
+                        startActivity(Intent(this@RegistrationActivity, ContactInfoActivity::class.java))
                 } else {
                     CookieBarUtil.makeCookie(
                         this@RegistrationActivity,

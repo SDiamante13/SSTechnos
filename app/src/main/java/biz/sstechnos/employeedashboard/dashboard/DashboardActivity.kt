@@ -58,7 +58,6 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         //   Admin Buttons
         employee_listings_container.setOnClickListener {
             startActivity(Intent(this, EmployeeListingsActivity::class.java))
-            progress_spinner.visibility = VISIBLE
         }
 
         view_timesheets_container.setOnClickListener {
@@ -76,7 +75,6 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
         enter_timesheets_container.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, TimeSheetActivity::class.java))
-            progress_spinner.visibility = VISIBLE
         }
 
         project_listings_container.setOnClickListener {
