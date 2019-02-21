@@ -9,9 +9,12 @@ import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.RelativeLayout
+import android.widget.Toast
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.admin.EmployeeListingsActivity
+import biz.sstechnos.employeedashboard.admin.upload.UploadDocumentsActivity
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
+import biz.sstechnos.employeedashboard.employee.ViewDocumentsActivity
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
 import com.google.firebase.database.DataSnapshot
@@ -61,16 +64,16 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         }
 
         view_timesheets_container.setOnClickListener {
-
+            Toast.makeText(this@DashboardActivity, "Not yet implemented", Toast.LENGTH_SHORT).show()
         }
 
         upload_documents_container.setOnClickListener {
-
+            startActivity(Intent(this@DashboardActivity, UploadDocumentsActivity::class.java))
         }
 
         // Employee Buttons
         view_documents_container.setOnClickListener {
-
+            startActivity(Intent(this@DashboardActivity, ViewDocumentsActivity::class.java))
         }
 
         enter_timesheets_container.setOnClickListener {
@@ -78,7 +81,7 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         }
 
         project_listings_container.setOnClickListener {
-
+            Toast.makeText(this@DashboardActivity, "Not yet implemented", Toast.LENGTH_SHORT).show()
         }
     }
 

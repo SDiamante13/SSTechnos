@@ -17,7 +17,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".admin.UploadDocumentsActivity">
+        <activity android:name=".admin.upload.UploadDocumentsActivity">
         </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -43,6 +43,8 @@
         <activity android:name=".admin.ViewEmployeeActivity">
         </activity>
         <activity android:name=".employee.TimeSheetActivity">
+        </activity>
+        <activity android:name=".employee.ViewDocumentsActivity">
         </activity>
         <activity android:name=".dashboard.ViewContactInfoActivity">
         </activity>

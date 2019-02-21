@@ -96,6 +96,7 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             builder.setMessage("Are you sure you want to delete this employee from the database?")
             builder.setPositiveButton("YES") { _, _ ->
                 deleteEmployee()
+                // TODO Consider finishing activity here and don't show toast
                 Toast.makeText(this, "This employee has been deleted.", Toast.LENGTH_SHORT).show()
             }
 

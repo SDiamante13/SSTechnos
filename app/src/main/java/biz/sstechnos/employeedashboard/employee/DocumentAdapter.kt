@@ -1,4 +1,4 @@
-package biz.sstechnos.employeedashboard.admin
+package biz.sstechnos.employeedashboard.employee
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -16,7 +16,13 @@ class DocumentAdapter(val items : MutableList<String>) : RecyclerView.Adapter<Do
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentViewHolder {
         context = parent.context
-        return DocumentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.document_list_item, parent, false))
+        return DocumentViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.document_list_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: DocumentViewHolder, position: Int) {

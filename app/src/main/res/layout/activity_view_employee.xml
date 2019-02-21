@@ -179,62 +179,84 @@
                         android:inputType="number"/>
             </LinearLayout>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <Button
-                    android:id="@+id/edit_employee_button"
-                    android:visibility="gone"
-                    android:layout_width="40dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    style="@style/ButtonStyle"
-                    android:text="@string/edit" />
-
-            <Button
-                    android:id="@+id/delete_employee_button"
-                    android:visibility="gone"
-                    android:layout_width="40dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    style="@style/ButtonStyle"
-                    android:text="@string/delete" />
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <Button
-                    android:id="@+id/add_employee_button"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    style="@style/ButtonStyle"
-                    android:text="@string/create" />
-            <Button
-                    android:id="@+id/saveChanges_employee_button"
-                    android:visibility="gone"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    style="@style/ButtonStyle"
-                    android:text="@string/save_changes" />
-        </LinearLayout>
+                    android:weightSum="4"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <ImageView
+                        android:id="@+id/govId_img"
+                        android:src="@drawable/ic_left_arrow"
+                        android:layout_weight="2"
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="20dp"/>
+                <ImageView
+                        android:id="@+id/otherId_img"
+                        android:src="@drawable/ic_right_arrow"
+                        android:layout_weight="2"
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/edit_employee_button"
+                        android:visibility="gone"
+                        android:layout_width="40dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        style="@style/ButtonStyle"
+                        android:text="@string/edit"/>
+
+                <Button
+                        android:id="@+id/delete_employee_button"
+                        android:visibility="gone"
+                        android:layout_width="40dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        style="@style/ButtonStyle"
+                        android:text="@string/delete"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/add_employee_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        style="@style/ButtonStyle"
+                        android:text="@string/create"/>
+                <Button
+                        android:id="@+id/saveChanges_employee_button"
+                        android:visibility="gone"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        style="@style/ButtonStyle"
+                        android:text="@string/save_changes"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <include

@@ -92,7 +92,11 @@ class TimeSheetActivity : AppCompatActivity() {
 
         val loadTimesheetListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var timesheetSnapshot : Timesheet? = dataSnapshot.child("timesheets").child(employeeId).child(timesheetId).getValue(Timesheet::class.java)
+                var timesheetSnapshot : Timesheet? = dataSnapshot
+                    .child("timesheets")
+                    .child(employeeId)
+                    .child(timesheetId)
+                    .getValue(Timesheet::class.java)
                 if (timesheetSnapshot != null) {
                     populateTimesheet(timesheetSnapshot)
                 } else {

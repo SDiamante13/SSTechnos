@@ -42,12 +42,6 @@ class EmployeeListingsActivity : AppCompatActivity(), ValueEventListener {
         }
     }
 
-//    private fun retrieveEmployeeList(): MutableList<Employee> {
-//        var employeeListJson : String? = getSharedPreferences("EmployeeList", MODE_PRIVATE)
-//            .getString("employeeList", " ")
-//        return Gson().fromJson(employeeListJson, object : TypeToken<MutableList<Employee>>() {}.type)
-//    }
-
     override fun onDataChange(employees: DataSnapshot) {
         employeeNameList.clear()
         for (singleSnapshot in employees.children) {
