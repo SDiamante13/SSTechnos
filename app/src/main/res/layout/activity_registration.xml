@@ -51,7 +51,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:hint="30/11/2018"
-            android:inputType = "text" />
+            android:inputType = "date" />
     </LinearLayout>
 
     <LinearLayout

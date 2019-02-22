@@ -1,23 +1,13 @@
 package biz.sstechnos.employeedashboard.admin
 
-import android.content.Context
 import android.content.Intent
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ActivityScenario.launch
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
+import com.google.common.truth.Truth.assertThat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.android.synthetic.main.activity_view_employee.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,27 +16,25 @@ import org.koin.standalone.StandAloneContext
 import org.koin.test.KoinTest
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import com.google.common.truth.Truth.assertThat
-
-
 
 @RunWith(RobolectricTestRunner::class)
 class ViewEmployeeActivityTest : KoinTest {
 
-    private val mockDatabaseReference = mockk<DatabaseReference>(relaxed = true)
-    private val mockDataSnapshot = mockk<DataSnapshot>(relaxed = true)
+    private val mockDatabaseReference: DatabaseReference = mockk(relaxed = true)
+    private val mockDataSnapshot: DataSnapshot = mockk()
 
-    private lateinit var activity : ViewEmployeeActivity
-    private lateinit var employeeId : String
-
-    val mockEmployee = Employee("SST501",
+    private val mockEmployee = Employee(
+        "SST501",
         "Sherlock",
         "Holmes",
         "16/05/1923",
         Role.EMPLOYEE,
         "Detective",
         "200000",
-        "")
+        ""
+    )
+
+    private lateinit var activity: ViewEmployeeActivity
 
     @Before
     fun setUp() {
@@ -57,7 +45,10 @@ class ViewEmployeeActivityTest : KoinTest {
         every { mockDataSnapshot.child(any()) } returns mockDataSnapshot
         every { mockDataSnapshot.getValue(Employee::class.java) } returns mockEmployee
 
-        activity = Robolectric.buildActivity(ViewEmployeeActivity::class.java, Intent().putExtra("EMPLOYEE_ID", mockEmployee.employeeId))
+        activity = Robolectric.buildActivity(
+            ViewEmployeeActivity::class.java,
+            Intent().putExtra("EMPLOYEE_ID", mockEmployee.employeeId)
+        )
             .create().start().resume()
             .get()
 
@@ -73,6 +64,4 @@ class ViewEmployeeActivityTest : KoinTest {
         assertThat(activity.viewJobTitle.text.toString()).isEqualTo(mockEmployee.jobTitle)
         assertThat(activity.viewSalary.text.toString()).isEqualTo(mockEmployee.salary)
     }
-
-
 }

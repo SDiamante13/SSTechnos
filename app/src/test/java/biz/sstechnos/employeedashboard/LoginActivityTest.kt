@@ -1,11 +1,10 @@
 package biz.sstechnos.employeedashboard
 
-import androidx.test.core.app.ActivityScenario
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers
@@ -17,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -29,13 +29,13 @@ import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityTest : KoinTest {
+class LoginActivityTest: KoinTest {
 
-    private val mockFirebaseAuth = mockk<FirebaseAuth>(relaxed = true)
+    private val scenario = launch(LoginActivity::class.java)
 
-    private lateinit var scenario : ActivityScenario<LoginActivity>
-    private lateinit var mockTask : Task<AuthResult>
-    private lateinit var mockUser : FirebaseUser
+    private val mockFirebaseAuth: FirebaseAuth = mockk()
+    private val mockTask: Task<AuthResult> = mockk()
+    private val mockUser: FirebaseUser = mockk()
 
     private val username = "lilJon"
     private val password = "eastside"
@@ -45,21 +45,21 @@ class LoginActivityTest : KoinTest {
         loadKoinModules(module(override = true) {
             single("fireBaseAuth") { mockFirebaseAuth }
         })
-        mockUser = mockk(relaxed = true)
-        mockTask = mockk(relaxed = true)
-        scenario = launch(LoginActivity::class.java)
     }
 
     @After
     fun tearDown() {
+        clearMocks(mockTask, mockUser)
+        scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }
 
     @Test
-    fun successfulLogin_launchesDashboardActivity() {
+    fun `successful login launches DashboardActivity`() {
         every { mockTask.isSuccessful } returns true
         every { mockTask.result.user } returns mockUser
         every { mockUser.isEmailVerified } returns true
+        every { mockUser.email } returns "eastsideboyz@gmail.com"
 
         onView(withId(R.id.username_editText)).perform(typeText(username))
         onView(withId(R.id.password_editText)).perform(typeText(password))
@@ -72,7 +72,7 @@ class LoginActivityTest : KoinTest {
     }
 
     @Test
-    fun unSuccessfulLogin_dueToUnverifiedLogin_displaysCookieBarAboutUnverifiedEmail() {
+    fun `unSuccessful login due to unverified login displays CookieBar about unverified email`() {
         every { mockTask.isSuccessful } returns true
         every { mockTask.result.user } returns mockUser
         every { mockUser.isEmailVerified } returns false
@@ -83,13 +83,11 @@ class LoginActivityTest : KoinTest {
 
         scenario.onActivity { activity -> activity.onComplete(mockTask) }
 
-        //TODO find out how to assert that CookieBar Showed SEE ContactInfoTest
         onView(withId(R.id.tv_title)).check(matches(ViewMatchers.withText("Login attempt unsuccessful!")))
-
     }
 
     @Test
-    fun unSuccessfulLogin_dueToMissingFields_displaysCookieBarAboutValidationError() {
+    fun `unSuccessful login due to missing fields displays CookieBar about validation error`() {
         onView(withId(R.id.username_editText)).perform(typeText(username))
         closeSoftKeyboard()
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
@@ -16,6 +17,7 @@ import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import io.mockk.clearMocks
 import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
@@ -28,12 +30,10 @@ import org.koin.test.KoinTest
 
 
 @RunWith(AndroidJUnit4::class)
-class DashboardActivityTest : KoinTest{
+class DashboardActivityTest: KoinTest{
 
-    private val mockDatabaseReference = mockk<DatabaseReference>(relaxed = true)
-    private lateinit var mockDataSnapshot : DataSnapshot
-
-    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val mockDatabaseReference: DatabaseReference = mockk(relaxed = true)
+    private val mockDataSnapshot: DataSnapshot = mockk(relaxed = true)
 
     private lateinit var scenario : ActivityScenario<DashboardActivity>
     private lateinit var loginContext : Context
@@ -45,8 +45,6 @@ class DashboardActivityTest : KoinTest{
             single("databaseReference") { mockDatabaseReference }
         })
 
-        mockDataSnapshot = mockk(relaxed = true)
-
         val loginScenario = launch(LoginActivity::class.java)
         loginScenario.onActivity { activity -> loginContext = activity.applicationContext  }
         email = "email@test.com"
@@ -55,6 +53,8 @@ class DashboardActivityTest : KoinTest{
 
     @After
     fun tearDown() {
+        clearMocks()
+        scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }
 
@@ -96,7 +96,7 @@ class DashboardActivityTest : KoinTest{
     }
 
     @Test
-    fun `clicking on enter timesheet button goes to TimeSheetActivity`() {
+    fun `clicking on enter time sheet button goes to TimeSheetActivity`() {
         init()
         scenario.onActivity { activity -> activity.enterTimesheetsContainer.performClick() }
         intended(hasComponent(TimeSheetActivity::class.java.canonicalName))

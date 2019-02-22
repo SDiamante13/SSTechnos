@@ -1,9 +1,8 @@
 package biz.sstechnos.employeedashboard.registration
 
-import androidx.test.core.app.ActivityScenario
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -19,9 +18,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.android.synthetic.main.activity_account_creation.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -32,14 +31,14 @@ import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
-class AccountCreationActivityTest : KoinTest {
+class AccountCreationActivityTest: KoinTest {
 
-    private val mockFirebaseAuth = mockk<FirebaseAuth>(relaxed = true)
-    private val mockDatabaseReference = mockk<DatabaseReference>(relaxed = true)
-    private val mockAuthTask = mockk<Task<AuthResult>>(relaxed = true)
-    private val void = mockk<Void>(relaxed = true)
+    private val mockFirebaseAuth: FirebaseAuth = mockk(relaxed = true)
+    private val mockDatabaseReference: DatabaseReference = mockk(relaxed = true)
+    private val mockAuthTask: Task<AuthResult> = mockk()
+    private val void: Void = mockk()
 
-    private lateinit var scenario : ActivityScenario<AccountCreationActivity>
+    private val scenario = launch(AccountCreationActivity::class.java)
 
     @Before
     fun setUp() {
@@ -51,24 +50,27 @@ class AccountCreationActivityTest : KoinTest {
 
     @After
     fun tearDown() {
+        clearMocks(mockAuthTask)
+        scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }
 
     @Test
     fun `successful account creation results in email verification`() {
         every { mockAuthTask.isSuccessful } returns true
-        scenario = launch(AccountCreationActivity::class.java)
+
         scenario.onActivity { activity -> activity.onComplete(mockAuthTask) }
         scenario.onActivity { activity -> activity.onSuccess(void) }
+
         onView(withId(R.id.tv_title)).check(matches(withText("Verification Email Sent!")))
     }
 
     @Test
     fun `when fields are filled out and button is clicked then an account will be created and the user will be sent back to Login Activity`() {
-        scenario = launch(AccountCreationActivity::class.java)
         onView(withId(R.id.username_editText)).perform(typeText("DirtyMyles"))
         onView(withId(R.id.password_editText)).perform(typeText("DGTAllDay"))
         onView(withId(R.id.confirmPassword_editText)).perform(scrollTo(), typeText("DGTAllDay"))
+
         init()
         onView(withId(R.id.create_button)).perform(scrollTo(), click())
         Intents.intended(IntentMatchers.hasComponent(LoginActivity::class.java.canonicalName))
@@ -77,19 +79,20 @@ class AccountCreationActivityTest : KoinTest {
 
     @Test
     fun `when any one field is not filled out show a Cookie Bar explaining the error`() {
-        scenario = launch(AccountCreationActivity::class.java)
         onView(withId(R.id.username_editText)).perform(typeText("Yoyoman"))
         onView(withId(R.id.create_button)).perform(scrollTo(), click())
+
         onView(withId(R.id.tv_title)).check(matches(withText("Account information required!")))
     }
 
     @Test
     fun `when the password fields do not match show a Cookie Bar explaining the error`() {
-        scenario = launch(AccountCreationActivity::class.java)
         onView(withId(R.id.username_editText)).perform(typeText("DirtyMyles"))
         onView(withId(R.id.password_editText)).perform(typeText("DGTAllDay"))
         onView(withId(R.id.confirmPassword_editText)).perform(scrollTo(), typeText("DGTAllDay123"))
+
         onView(withId(R.id.create_button)).perform(scrollTo(), click())
+
         onView(withId(R.id.tv_title)).check(matches(withText("Passwords do not match!")))
     }
 }
