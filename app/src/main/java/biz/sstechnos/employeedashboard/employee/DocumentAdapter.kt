@@ -1,16 +1,17 @@
 package biz.sstechnos.employeedashboard.employee
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import biz.sstechnos.employeedashboard.R
-import kotlinx.android.synthetic.main.document_list_item.view.*
+import biz.sstechnos.employeedashboard.admin.upload.DocumentUpload
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.document_item.view.*
 
-class DocumentAdapter(val items : MutableList<String>) : RecyclerView.Adapter<DocumentViewHolder>() {
+class DocumentAdapter(val documentUploads : MutableList<DocumentUpload>) : RecyclerView.Adapter<DocumentViewHolder>() {
 
     private lateinit var context : Context
 
@@ -18,7 +19,7 @@ class DocumentAdapter(val items : MutableList<String>) : RecyclerView.Adapter<Do
         context = parent.context
         return DocumentViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.document_list_item,
+                R.layout.document_item,
                 parent,
                 false
             )
@@ -26,25 +27,31 @@ class DocumentAdapter(val items : MutableList<String>) : RecyclerView.Adapter<Do
     }
 
     override fun onBindViewHolder(holder: DocumentViewHolder, position: Int) {
-        holder.documentName.text = items[position]
-        if(position % 2 == 0) {
-            holder.document_container.setBackgroundColor(ContextCompat.getColor(context, R.color.black ))
-        } else {
-            holder.document_container.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary ))
-        }
+        val currentDocument = documentUploads[position]
+        holder.documentName.text = currentDocument.documentName
+
+        Picasso.with(context)
+            .load(currentDocument.imageUrl)
+            .fit()
+            .centerCrop()
+            .into(holder.documentImage)
+
+
         holder.itemView.setOnClickListener {
-            Log.d("SSTechnos", "name of document: ${items[position]}")
+            Log.d("SSTechnos", "name of document: ${documentUploads[position]}")
         }
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return documentUploads.size
     }
 }
 
 
 class DocumentViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each employee to
-    val documentName = view.document_member!!
-    val document_container = view.document_container!!
+    val documentName = view.document_name
+    val documentImage = view.image_view_document
+
+
 }

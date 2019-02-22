@@ -2,22 +2,33 @@ package biz.sstechnos.employeedashboard.employee
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
+import android.widget.Toast
 import biz.sstechnos.employeedashboard.R
+import biz.sstechnos.employeedashboard.admin.upload.DocumentUpload
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_upload_documents.*
+import kotlinx.android.synthetic.main.activity_view_documents.*
 import org.koin.android.ext.android.inject
 
 
-class ViewDocumentsActivity : AppCompatActivity() {
+class ViewDocumentsActivity : AppCompatActivity(), ValueEventListener {
 
-    private val storageReference : StorageReference by inject()
+    private val databaseReference : DatabaseReference by inject()
+
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var documentAdapter: DocumentAdapter
 
     private lateinit var employeeId : String
 
-    var documentByteArrayList : MutableList<String> = mutableListOf()
-
-    var documentNameList : MutableList<String> = mutableListOf()
+    private var documentList : MutableList<DocumentUpload> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +38,29 @@ class ViewDocumentsActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
-            .getString("employeeId", " ")
+        recyclerView = recycler_view_documents
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(baseContext)
 
-        // Creates a vertical Layout Manager
-//        document_list_view.layoutManager = LinearLayoutManager(baseContext)
-//
-//        // Access the RecyclerView Adapter and load the data into it
-//        document_list_view.adapter = DocumentAdapter(documentNameList)
+        databaseReference.child("documents").addValueEventListener(this)
     }
+
+    override fun onDataChange(documents: DataSnapshot) {
+
+        for (singleSnapshot in documents.children) {
+            var documentUploadSnapshot = singleSnapshot.getValue(DocumentUpload::class.java)
+            if (documentUploadSnapshot != null) documentList.add(documentUploadSnapshot)
+        }
+
+        documentAdapter = DocumentAdapter(documentList)
+        recyclerView.adapter = documentAdapter
+
+    }
+
+    override fun onCancelled(databaseError: DatabaseError?) {
+        Toast.makeText(this@ViewDocumentsActivity, databaseError?.message, Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         onBackPressed()

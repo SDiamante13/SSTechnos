@@ -52,12 +52,11 @@ class UploadDocumentsActivity : AppCompatActivity(), OnCompleteListener<UploadTa
                 Toast.makeText(this@UploadDocumentsActivity, "Upload in progress", Toast.LENGTH_SHORT).show()
             else
                 uploadFile()
-
         }
     }
 
     private fun uploadFile() {
-        if (imageUri != Uri.EMPTY) {
+        if (imageUri != Uri.EMPTY && edit_text_file.toString().trim() != "") {
             uploadTask = storageReference.child("documents")
                 .child("" + System.currentTimeMillis() + "." + getFileExtension(imageUri))
                 .putFile(imageUri)
