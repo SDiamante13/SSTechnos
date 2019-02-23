@@ -16,7 +16,7 @@ import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -59,7 +59,7 @@ class RegistrationActivityTest: KoinTest {
 
     @After
     fun tearDown() {
-        clearMocks(mockDataSnapshot)
+        clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
         StandAloneContext.stopKoin()
     }

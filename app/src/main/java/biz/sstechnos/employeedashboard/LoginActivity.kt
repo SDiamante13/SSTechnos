@@ -14,14 +14,13 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
 
 
 class LoginActivity : AppCompatActivity(), OnCompleteListener<AuthResult> {
 
-    private val auth : FirebaseAuth by inject(name = "fireBaseAuth")
+    private val auth : FirebaseAuth by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

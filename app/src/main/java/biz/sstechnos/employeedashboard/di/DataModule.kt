@@ -6,7 +6,7 @@ import com.google.firebase.storage.FirebaseStorage
 import org.koin.dsl.module.module
 
 val dataModule = module(override = true) {
-    single("fireBaseAuth") { FirebaseAuth.getInstance() }
+    single("firebaseAuth") { FirebaseAuth.getInstance() }
     single("databaseReference") { FirebaseDatabase.getInstance().reference }
     single("storageReference") { FirebaseStorage.getInstance().reference }
 }

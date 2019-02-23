@@ -14,7 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import biz.sstechnos.employeedashboard.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -37,7 +37,7 @@ class ContactInfoActivityTest: KoinTest {
     @Before
     fun setUp() {
         loadKoinModules(module(override = true) {
-            single("mockDatabaseReference") { mockDatabaseReference }
+            single("databaseReference") { mockDatabaseReference }
         })
 
         every { mockDatabaseReference.child(any()) } returns mockDatabaseReference
@@ -45,7 +45,7 @@ class ContactInfoActivityTest: KoinTest {
 
     @After
     fun tearDown() {
-        clearMocks(mockTask)
+        clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }

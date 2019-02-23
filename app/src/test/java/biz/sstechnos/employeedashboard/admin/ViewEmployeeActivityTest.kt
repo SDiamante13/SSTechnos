@@ -1,13 +1,16 @@
 package biz.sstechnos.employeedashboard.admin
 
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Role
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,7 +54,12 @@ class ViewEmployeeActivityTest : KoinTest {
         )
             .create().start().resume()
             .get()
+    }
 
+    @After
+    fun tearDown() {
+        clearAllMocks()
+        StandAloneContext.stopKoin()
     }
 
     @Test

@@ -17,8 +17,9 @@ import biz.sstechnos.employeedashboard.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -36,6 +37,8 @@ class AccountCreationActivityTest: KoinTest {
     private val mockFirebaseAuth: FirebaseAuth = mockk(relaxed = true)
     private val mockDatabaseReference: DatabaseReference = mockk(relaxed = true)
     private val mockAuthTask: Task<AuthResult> = mockk()
+    private val mockVoidTask: Task<Void> = mockk()
+    private val mockFirebaseUser: FirebaseUser = mockk()
     private val void: Void = mockk()
 
     private val scenario = launch(AccountCreationActivity::class.java)
@@ -43,14 +46,21 @@ class AccountCreationActivityTest: KoinTest {
     @Before
     fun setUp() {
         loadKoinModules(module(override = true) {
-            single("fireBaseAuth") { mockFirebaseAuth }
             single("databaseReference") { mockDatabaseReference }
+            single("firebaseAuth") { mockFirebaseAuth }
         })
+
+//        every { mockFirebaseAuth.createUserWithEmailAndPassword(any(), any()) } returns mockAuthTask
+//        every { mockFirebaseAuth.currentUser } returns mockFirebaseUser
+//        every { mockAuthTask.addOnCompleteListener(any()) } returns mockAuthTask
+//        every { mockFirebaseUser.sendEmailVerification() } returns mockVoidTask
+//        every { mockFirebaseUser.email } returns "test@gmail.com"
+//        every { mockVoidTask.addOnSuccessListener(any()) } returns mockVoidTask
     }
 
     @After
     fun tearDown() {
-        clearMocks(mockAuthTask)
+        clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }

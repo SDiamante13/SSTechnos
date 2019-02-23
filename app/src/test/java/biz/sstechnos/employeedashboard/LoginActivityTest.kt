@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -43,13 +43,13 @@ class LoginActivityTest: KoinTest {
     @Before
     fun setUp() {
         loadKoinModules(module(override = true) {
-            single("fireBaseAuth") { mockFirebaseAuth }
+            single("firebaseAuth") { mockFirebaseAuth }
         })
     }
 
     @After
     fun tearDown() {
-        clearMocks(mockTask, mockUser)
+        clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }

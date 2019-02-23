@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 
 class ContactInfoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, OnCompleteListener<Void> {
 
-    private val databaseReference : DatabaseReference by inject()
+    private val databaseReference: DatabaseReference by inject()
 
     private var relationships = arrayOf(
         Relationship.MOTHER,

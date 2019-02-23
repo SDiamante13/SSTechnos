@@ -7,7 +7,6 @@ import android.view.View.VISIBLE
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,7 +16,7 @@ import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
@@ -53,7 +52,7 @@ class DashboardActivityTest: KoinTest{
 
     @After
     fun tearDown() {
-        clearMocks()
+        clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }
