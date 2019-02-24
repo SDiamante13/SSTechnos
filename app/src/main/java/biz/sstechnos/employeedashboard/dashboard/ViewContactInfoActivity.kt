@@ -22,7 +22,7 @@ class ViewContactInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
-            .getString("employeeId", " ")
+            .getString("employeeId", " ")!!
 
         readContactInfoFromDatabase(employeeId)
     }

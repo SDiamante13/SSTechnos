@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_upload_documents.*
 import org.koin.android.ext.android.inject
 
@@ -95,7 +96,7 @@ class UploadDocumentsActivity : AppCompatActivity(), OnCompleteListener<UploadTa
     private fun getFileExtension(uri: Uri) : String {
         val contentResolver = contentResolver
         val mime = MimeTypeMap.getSingleton()
-        return mime.getExtensionFromMimeType(contentResolver.getType(uri))
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri))!!
     }
 
 
@@ -110,12 +111,9 @@ class UploadDocumentsActivity : AppCompatActivity(), OnCompleteListener<UploadTa
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
-            data != null && data.data != null) {
-            imageUri = data.data
-            // use Picasso ?
-
-            image_view_preview.setImageURI(imageUri)
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            imageUri = data.data!!
+            Picasso.with(this@UploadDocumentsActivity).load(imageUri).into(image_view_preview)
         }
     }
 

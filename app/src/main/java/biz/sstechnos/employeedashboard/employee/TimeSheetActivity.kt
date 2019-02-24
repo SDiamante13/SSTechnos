@@ -33,7 +33,7 @@ class TimeSheetActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
-            .getString("employeeId", " ")
+            .getString("employeeId", " ")!!
 
         val todaysDate = Calendar.getInstance()
         val months = DateFormatSymbols().months
