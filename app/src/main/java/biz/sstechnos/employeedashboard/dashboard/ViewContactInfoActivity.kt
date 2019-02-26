@@ -7,7 +7,7 @@ import android.view.MenuItem
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.ContactInfo
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_view_contact_info.*
+import kotlinx.android.synthetic.main.layout_contact_info.*
 import org.koin.android.ext.android.inject
 
 class ViewContactInfoActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class ViewContactInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_contact_info)
+        setContentView(R.layout.layout_contact_info)
         supportActionBar?.title = "SSTechnos - Contact Info"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

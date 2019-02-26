@@ -46,4 +46,6 @@
     <string name="admin">Admin</string>
     <string name="employeeId">Employee Id:</string>
     <string name="upload_new_document">Upload New Document</string>
+    <string name="log_out">Log Out</string>
+    <string name="approve">Approve</string>
 </resources>

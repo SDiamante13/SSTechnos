@@ -405,8 +405,16 @@
                 android:layout_marginStart="80dp"
                 style="@style/ButtonStyle"
                 android:text="@string/submit"/>
-
     </LinearLayout>
+
+    <Button
+            android:id="@+id/timesheet_approveButton"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            style="@style/ButtonStyle"
+            android:visibility="gone"
+            android:text="@string/approve"/>
 
 
 </LinearLayout>

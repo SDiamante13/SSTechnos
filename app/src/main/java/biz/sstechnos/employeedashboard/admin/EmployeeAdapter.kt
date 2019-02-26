@@ -32,7 +32,11 @@ class EmployeeAdapter(val items : MutableList<String>) : RecyclerView.Adapter<Em
         holder.itemView.setOnClickListener {
             Log.d("SSTechnos", "name of employee: ${items[position]}")
             var employeeId = items[position].split(" ")[0]
-            context.startActivity(Intent(context, ViewEmployeeActivity::class.java).putExtra("EMPLOYEE_ID", employeeId).addFlags(FLAG_ACTIVITY_NEW_TASK))
+            var accountStatus = items[position].split(" ")[3]
+            context.startActivity(Intent(context, ViewEmployeeActivity::class.java)
+                .putExtra("EMPLOYEE_ID", employeeId)
+                .putExtra("ACCOUNT_STATUS", accountStatus)
+                .addFlags(FLAG_ACTIVITY_NEW_TASK))
         }
     }
 

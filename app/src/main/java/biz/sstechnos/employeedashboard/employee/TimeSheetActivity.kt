@@ -6,6 +6,8 @@ import android.text.Editable
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Timesheet
@@ -24,6 +26,8 @@ class TimeSheetActivity : AppCompatActivity() {
     private val databaseReference : DatabaseReference by inject()
 
     private lateinit var employeeId : String
+    private var adminView: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +36,14 @@ class TimeSheetActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
-            .getString("employeeId", " ")!!
+        if(intent.extras == null) { /** This will use the logged in user's id */
+            adminView = false
+            employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
+                .getString("employeeId", " ")!!
+        } else { /** This is used when an admin is approving an employee's timesheet */
+            employeeId = intent.getStringExtra("EMPLOYEE_ID")
+            adminView = true
+        }
 
         val todaysDate = Calendar.getInstance()
         val months = DateFormatSymbols().months
@@ -78,13 +88,19 @@ class TimeSheetActivity : AppCompatActivity() {
                 hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex, todaysDate)
             }
         }
+
+        if(adminView) {
+            timesheet_saveButton.visibility = GONE
+            timesheet_submitButton.visibility = GONE
+            timesheet_approveButton.visibility = VISIBLE
+        }
     }
 
     private fun hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex: Int, todaysDate: Calendar) {
         if (monthIndex != todaysDate.get(Calendar.MONTH)) {
             rightArrow_button.visibility = View.VISIBLE
         } else {
-            rightArrow_button.visibility = View.GONE
+            rightArrow_button.visibility = GONE
         }
     }
 

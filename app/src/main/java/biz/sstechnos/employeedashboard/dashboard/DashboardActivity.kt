@@ -144,8 +144,8 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.settings -> return true
-            R.id.contact_info -> startActivity(Intent(this, ViewContactInfoActivity::class.java))
+            R.id.settings -> Toast.makeText(this@DashboardActivity, "Setting not implemented", Toast.LENGTH_SHORT).show()
+            R.id.log_out -> finish()
             else -> onBackPressed()
         }
         return true

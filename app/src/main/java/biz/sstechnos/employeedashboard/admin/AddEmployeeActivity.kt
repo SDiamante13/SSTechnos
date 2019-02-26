@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import biz.sstechnos.employeedashboard.R
@@ -13,6 +14,7 @@ import biz.sstechnos.employeedashboard.entity.Role
 import biz.sstechnos.employeedashboard.utils.CookieBarUtil
 import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_view_employee.*
+import kotlinx.android.synthetic.main.layout_contact_info.*
 import org.koin.android.ext.android.inject
 
 
@@ -30,6 +32,9 @@ class AddEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         supportActionBar?.title = "Add Employee"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        contact_info_layout.visibility = GONE
+        image_button_timesheet.visibility = GONE
 
         setUpSpinnerAdapter()
         add_employee_button.setOnClickListener {

@@ -16,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext
+import org.koin.standalone.StandAloneContext.loadKoinModules
 import org.koin.test.KoinTest
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -41,7 +42,7 @@ class ViewEmployeeActivityTest : KoinTest {
 
     @Before
     fun setUp() {
-        StandAloneContext.loadKoinModules(module(override = true) {
+        loadKoinModules(module(override = true) {
             single("databaseReference") { mockDatabaseReference }
         })
 
@@ -51,6 +52,7 @@ class ViewEmployeeActivityTest : KoinTest {
         activity = Robolectric.buildActivity(
             ViewEmployeeActivity::class.java,
             Intent().putExtra("EMPLOYEE_ID", mockEmployee.employeeId)
+                .putExtra("ACCOUNT_STATUS", "ACTIVE")
         )
             .create().start().resume()
             .get()

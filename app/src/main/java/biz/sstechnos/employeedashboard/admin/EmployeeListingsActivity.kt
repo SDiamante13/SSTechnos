@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import biz.sstechnos.employeedashboard.R
+import biz.sstechnos.employeedashboard.employee.DocumentAdapter
 import biz.sstechnos.employeedashboard.entity.Employee
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,6 +19,8 @@ import org.koin.android.ext.android.inject
 class EmployeeListingsActivity : AppCompatActivity(), ValueEventListener {
 
     private val databaseReference : DatabaseReference by inject()
+
+    private lateinit var employeeAdapter: EmployeeAdapter
 
     var employeeNameList : MutableList<String> = mutableListOf()
 
@@ -33,21 +36,26 @@ class EmployeeListingsActivity : AppCompatActivity(), ValueEventListener {
         // Creates a vertical Layout Manager
         employee_list_view.layoutManager = LinearLayoutManager(baseContext)
 
-        // Access the RecyclerView Adapter and load the data into it
-        employee_list_view.adapter = EmployeeAdapter(employeeNameList)
-
-
         add_employee.setOnClickListener {
             startActivity(Intent(this, AddEmployeeActivity::class.java))
         }
     }
 
     override fun onDataChange(employees: DataSnapshot) {
+        var accountStatus: String
         employeeNameList.clear()
         for (singleSnapshot in employees.children) {
+            accountStatus = "ACTIVE"
             var employeeSnapshot = singleSnapshot.getValue<Employee>(Employee::class.java)!!
-            employeeNameList.add("${employeeSnapshot.employeeId} ${employeeSnapshot.firstName} ${employeeSnapshot.lastName}")
+            if(employeeSnapshot.username.equals("")) {
+                accountStatus = "INACTIVE"
+            }
+            employeeNameList.add("${employeeSnapshot.employeeId} ${employeeSnapshot.firstName} ${employeeSnapshot.lastName} $accountStatus")
         }
+        // TODO consider adding a green checkmark for employees who have created accounts
+
+        employeeAdapter = EmployeeAdapter(employeeNameList)
+        employee_list_view.adapter = employeeAdapter
     }
 
     override fun onCancelled(databaseError: DatabaseError) {
