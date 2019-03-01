@@ -48,4 +48,10 @@
     <string name="upload_new_document">Upload New Document</string>
     <string name="log_out">Log Out</string>
     <string name="approve">Approve</string>
+    <string name="delete_employee_title">Delete Employee</string>
+    <string name="delete_employee_message">Are you sure you want to delete this employee from the database?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="update_employee_title">Update Employee</string>
+    <string name="update_employee_message">Are you sure you want to update this employee in the database?</string>
 </resources>

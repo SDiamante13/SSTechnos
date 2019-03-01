@@ -1,6 +1,7 @@
 package biz.sstechnos.employeedashboard.employee
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.util.Log
@@ -8,12 +9,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import biz.sstechnos.employeedashboard.R
-import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Timesheet
 import biz.sstechnos.employeedashboard.entity.Week
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_time_sheet.*
 import org.koin.android.ext.android.inject
 import java.lang.Double.parseDouble
@@ -28,6 +31,12 @@ class TimeSheetActivity : AppCompatActivity() {
     private lateinit var employeeId : String
     private var adminView: Boolean = false
 
+
+    /** To test this: We read initial data (but due to the changing of the timesheetId this cannot be implenented through the interface)
+     *  Also: save updated data and toggle approve flag
+     *
+     *
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,11 +98,43 @@ class TimeSheetActivity : AppCompatActivity() {
             }
         }
 
+        timesheet_approveButton.setOnClickListener {
+            val builder = AlertDialog.Builder(this@TimeSheetActivity)
+            builder.setTitle("Approve Timesheet")
+            builder.setMessage("Would you like to approve this timesheet?")
+            builder.setPositiveButton("YES") { _, _ ->
+                approveTimesheet(timesheetId, true)
+                Toast.makeText(this, "Timesheet approved", Toast.LENGTH_SHORT).show()
+            }
+
+            builder.setNeutralButton("No") { _, _ ->
+                approveTimesheet(timesheetId, false)
+                Toast.makeText(this, "Timesheet not approved", Toast.LENGTH_SHORT).show()
+            }
+
+            builder.setNeutralButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            builder.create().show()
+        }
+
         if(adminView) {
             timesheet_saveButton.visibility = GONE
             timesheet_submitButton.visibility = GONE
             timesheet_approveButton.visibility = VISIBLE
         }
+    }
+
+    private fun approveTimesheet(timesheetId: String, approve: Boolean) {
+        databaseReference
+            .child("timesheets")
+            .child(employeeId)
+            .child(timesheetId)
+            .child("approved")
+            .setValue(approve)
+            .addOnSuccessListener { Log.d("SSTechnos", "Timesheet approved: $approve") }
+            .addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
     }
 
     private fun hideRightArrowButtonWhenCurrentMonthIsSelected(monthIndex: Int, todaysDate: Calendar) {
@@ -193,6 +234,13 @@ class TimeSheetActivity : AppCompatActivity() {
         week4_friday.text = timesheetSnapshot.weeks[3].fridayHrs.toEditable()
         week4_saturday.text = timesheetSnapshot.weeks[3].saturdayHrs.toEditable()
         week4_sunday.text = timesheetSnapshot.weeks[3].sundayHrs.toEditable()
+
+        total_hours.text = timesheetSnapshot.totalHrs.toString()
+        if(timesheetSnapshot.approved) {
+            image_check_box.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_box, this@TimeSheetActivity.theme))
+            } else {
+            image_check_box.setImageDrawable(resources.getDrawable(R.drawable.ic_unchecked_box, this@TimeSheetActivity.theme))
+        }
     }
 
     private fun createTimesheet(): Timesheet {

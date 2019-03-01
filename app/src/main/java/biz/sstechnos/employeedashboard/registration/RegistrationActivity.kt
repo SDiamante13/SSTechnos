@@ -54,7 +54,7 @@ class RegistrationActivity : AppCompatActivity(), ValueEventListener {
         val dateOfBirth = dateOfBirth_editText.text.toString()
 
         if (dataSnapshot != null) {
-            var employee: Employee? = dataSnapshot.child("employees").child(employeeId).getValue(Employee::class.java)
+            var employee: Employee? = dataSnapshot.child("employees").child(employeeId).child("Employee").getValue(Employee::class.java)
             if (employee != null) {
                 Log.d("SSTechnos", "Employee: ${employee.employeeId} ${employee.lastName} ${employee.dateOfBirth}")
 

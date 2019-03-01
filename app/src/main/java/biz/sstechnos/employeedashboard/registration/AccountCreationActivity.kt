@@ -57,15 +57,15 @@ class AccountCreationActivity : AppCompatActivity(), OnCompleteListener<AuthResu
     override fun onComplete(task: Task<AuthResult>) {
         if (task.isSuccessful) {
             Log.d("SSTechnos", "createUserWithEmail:success")
-            val user = auth.currentUser
+            val user = auth.currentUser!!
             val employeeId = getSharedPreferences("Employee", MODE_PRIVATE)
                 .getString("employeeId", " ")
 
-            databaseReference.child("employees").child(employeeId).child("username").setValue(user?.email)
+            databaseReference.child("employees").child(employeeId).child("Employee").child("username").setValue(user.email)
                 .addOnSuccessListener { Log.d("SSTechnos", "Employee email added to database.") }
                 .addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
 
-            user?.sendEmailVerification()?.addOnSuccessListener(this)
+            user.sendEmailVerification().addOnSuccessListener(this)
         }
     }
 

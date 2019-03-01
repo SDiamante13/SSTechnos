@@ -92,10 +92,10 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         var lastName = ""
 
         for(singleSnapshot in dataSnapshot!!.children) {
-            var employeeSnapshot = singleSnapshot.getValue<Employee>(Employee::class.java)!!
+            var employeeSnapshot = singleSnapshot.child("Employee").getValue(Employee::class.java)!!
             employeeList.add(employeeSnapshot)
 
-            if (userEmail.equals(employeeSnapshot.username)) {
+            if (userEmail == employeeSnapshot.username) {
                 employeeId = employeeSnapshot.employeeId
                 firstName = employeeSnapshot.firstName
                 lastName = employeeSnapshot.lastName

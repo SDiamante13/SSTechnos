@@ -30,7 +30,7 @@
                 android:layout_marginStart="55dp"
                 android:layout_gravity="center"
                 style="@style/H2DarkRedCasual"
-                android:text="December" />
+                android:text="December"/>
 
         <ImageView
                 android:id="@+id/rightArrow_button"
@@ -54,46 +54,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/monday" />
+                android:text="@string/monday"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/tuesday" />
+                android:text="@string/tuesday"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/wednesday" />
+                android:text="@string/wednesday"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/thursday" />
+                android:text="@string/thursday"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/friday" />
+                android:text="@string/friday"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/saturday" />
+                android:text="@string/saturday"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 style="@style/bodyCasualBold"
-                android:text="@string/sunday" />
+                android:text="@string/sunday"/>
 
     </LinearLayout>
 
@@ -383,6 +383,35 @@
                 android:inputType="numberDecimal"
                 android:hint="0"
                 android:background="@drawable/border"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="96dp"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/bodyCasualBold"
+                android:textSize="18dp"
+                android:text="Total hours:"/>
+
+        <TextView android:id="@+id/total_hours"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="8dp"
+                  style="@style/bodyCasualBold"
+                  android:textSize="18dp"
+                  android:text="0"/>
+        <ImageView
+                   android:id="@+id/image_check_box"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="32dp"
+                   android:layout_gravity="center_vertical"
+                   android:src="@drawable/ic_unchecked_box"/>
     </LinearLayout>
 
     <LinearLayout

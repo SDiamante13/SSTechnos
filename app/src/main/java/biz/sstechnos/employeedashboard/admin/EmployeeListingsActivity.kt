@@ -46,7 +46,7 @@ class EmployeeListingsActivity : AppCompatActivity(), ValueEventListener {
         employeeNameList.clear()
         for (singleSnapshot in employees.children) {
             accountStatus = "ACTIVE"
-            var employeeSnapshot = singleSnapshot.getValue<Employee>(Employee::class.java)!!
+            var employeeSnapshot = singleSnapshot.child("Employee").getValue(Employee::class.java)!!
             if(employeeSnapshot.username.equals("")) {
                 accountStatus = "INACTIVE"
             }

@@ -2,17 +2,13 @@ package biz.sstechnos.employeedashboard.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
 import biz.sstechnos.employeedashboard.entity.ContactInfo
@@ -21,28 +17,23 @@ import biz.sstechnos.employeedashboard.entity.Role
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_view_employee.*
 import kotlinx.android.synthetic.main.layout_contact_info.*
-import kotlinx.android.synthetic.main.progress_spinner.*
 import org.koin.android.ext.android.inject
-
+import cn.pedant.SweetAlert.SweetAlertDialog
 
 class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, ValueEventListener {
 
     private val databaseReference: DatabaseReference by inject()
 
     private lateinit var employeeId: String
+    private lateinit var username: String
     private var accountStatus: String = "ACTIVE"
     private lateinit var arrayAdapter: ArrayAdapter<Role>
+    private lateinit var deleteDialog: SweetAlertDialog
+    private lateinit var editDialog: SweetAlertDialog
 
     private var roles = arrayOf(Role.ADMIN, Role.EMPLOYEE)
     private var selectedRole = Role.ADMIN
-
-    lateinit var viewEmployeeId: EditText
-    lateinit var viewFirstName: EditText
-    lateinit var viewLastName: EditText
-    lateinit var viewDOB: EditText
-    lateinit var viewJobTitle: EditText
-    lateinit var viewSalary: EditText
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_employee)
@@ -55,9 +46,9 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         accountStatus = intent.getStringExtra("ACCOUNT_STATUS")
         setupLayout()
         setUpSpinnerAdapter()
-        databaseReference.addValueEventListener(this)
+        databaseReference.addListenerForSingleValueEvent(this)
 
-        if(accountStatus.equals("ACTIVE")) readContactInfoFromDatabase(employeeId)
+        if(accountStatus == "ACTIVE") readContactInfoFromDatabase(employeeId)
 
         image_button_timesheet.setOnClickListener {
             startActivity(Intent(this@ViewEmployeeActivity, TimeSheetActivity::class.java)
@@ -67,7 +58,8 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     override fun onDataChange(dataSnapshot: DataSnapshot) {
         Log.d("SSTechnos", "Reading employee from database")
-        var employeeSnapshot = dataSnapshot.child("employees").child(employeeId).getValue(Employee::class.java)!!
+        var employeeSnapshot = dataSnapshot.child("employees").child(employeeId).child("Employee").getValue(Employee::class.java)!!
+        username = employeeSnapshot.username!!
         populateFieldsWithEmployeeData(employeeSnapshot)
     }
 
@@ -77,86 +69,74 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     }
 
     private fun setupLayout() {
-        viewEmployeeId = viewEmployeeId_editText
-        viewFirstName = viewFirstName_editText
-        viewLastName = viewLastName_editText
-        viewDOB = viewDOB_editText
-        viewJobTitle = viewJobTitle_editText
-        viewSalary = viewSalary_editText
+        view_employee_id_label.visibility = VISIBLE
+        view_first_name_label.visibility = VISIBLE
+        view_last_name_label.visibility = VISIBLE
+        view_dob_label.visibility = VISIBLE
+        view_role_label.visibility = VISIBLE
+        view_job_title_label.visibility = VISIBLE
+        view_salary_label.visibility = VISIBLE
 
-        viewEmployeeId_label.visibility = VISIBLE
-        viewFirstName_label.visibility = VISIBLE
-        viewLastName_label.visibility = VISIBLE
-        viewDOB_label.visibility = VISIBLE
-        viewRole_label.visibility = VISIBLE
-        viewJobTitle_label.visibility = VISIBLE
-        viewSalary_label.visibility = VISIBLE
-
-        viewEmployeeId.isEnabled = false
-        viewFirstName.isEnabled = false
-        viewLastName.isEnabled = false
-        viewDOB.isEnabled = false
-        viewJobTitle.isEnabled = false
-        roleSpinner.isEnabled = false
-        viewSalary.isEnabled = false
+        view_employee_id_edit_text.isEnabled = false
+        view_first_name_edit_text.isEnabled = false
+        view_last_name_edit_text.isEnabled = false
+        view_dob_edit_text.isEnabled = false
+        view_job_title_edit_text.isEnabled = false
+        view_role_spinner.isEnabled = false
+        view_salary_edit_text.isEnabled = false
 
         add_employee_button.visibility = GONE
         edit_employee_button.visibility = VISIBLE
         delete_employee_button.visibility = VISIBLE
-        saveChanges_employee_button.visibility = VISIBLE
+        save_employee_button.visibility = VISIBLE
 
         delete_employee_button.setOnClickListener {
-            val builder = AlertDialog.Builder(this@ViewEmployeeActivity)
-            builder.setTitle("Delete Employee")
-            builder.setMessage("Are you sure you want to delete this employee from the database?")
-            builder.setPositiveButton("YES") { _, _ ->
-                deleteEmployee()
-                // TODO Consider finishing activity here and don't show toast
-                Toast.makeText(this, "This employee has been deleted.", Toast.LENGTH_SHORT).show()
-            }
+            deleteDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(getString(R.string.delete_employee_title))
+                .setContentText(getString(R.string.delete_employee_message))
+                .setConfirmButton(R.string.yes) {
+                    deleteEmployee()
+                    finish()
+                }
+                .setCancelButton(R.string.no) {
+                    dialog -> dialog.cancel()
+                }
 
-            builder.setNeutralButton("No") { _, _ ->
-                Toast.makeText(applicationContext, "This employee will not be deleted.", Toast.LENGTH_SHORT).show()
-            }
-
-            builder.create().show()
+                deleteDialog.show()
         }
 
         edit_employee_button.setOnClickListener {
-            viewFirstName.isEnabled = true
-            viewLastName.isEnabled = true
-            viewDOB.isEnabled = true
-            viewJobTitle.isEnabled = true
-            roleSpinner.isEnabled = true
-            viewSalary.isEnabled = true
+            view_first_name_edit_text.isEnabled = true
+            view_last_name_edit_text.isEnabled = true
+            view_dob_edit_text.isEnabled = true
+            view_job_title_edit_text.isEnabled = true
+            view_role_spinner.isEnabled = true
+            view_salary_edit_text.isEnabled = true
         }
 
-        saveChanges_employee_button.setOnClickListener {
-            val builder = AlertDialog.Builder(this@ViewEmployeeActivity)
-            builder.setTitle("Update Employee")
-            builder.setMessage("Are you sure you want to update this employee in the database?")
-            builder.setPositiveButton("YES") { _, _ ->
-                editEmployee()
-                Toast.makeText(this, "This employee has been updated.", Toast.LENGTH_SHORT).show()
-            }
-
-            builder.setNeutralButton("No") { _, _ ->
-                Toast.makeText(applicationContext, "This employee will not be updated.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-
-            builder.create().show()
+        save_employee_button.setOnClickListener {
+            editDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText(getString(R.string.update_employee_title))
+                .setContentText(getString(R.string.update_employee_message))
+                .setConfirmButton(R.string.yes) {
+                    editEmployee()
+                    finish()
+                }
+                .setCancelButton(R.string.no) { dialog ->
+                    dialog.cancel()
+                }
+                editDialog.show()
         }
     }
 
     private fun setUpSpinnerAdapter() {
-        roleSpinner!!.onItemSelectedListener = this
+        view_role_spinner!!.onItemSelectedListener = this
         // Create an ArrayAdapter using a simple spinner layout and array
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
         // Set layout to use when the list of choices appear
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
-        roleSpinner!!.adapter = arrayAdapter
+        view_role_spinner!!.adapter = arrayAdapter
         arrayAdapter.setNotifyOnChange(true)
     }
 
@@ -168,16 +148,16 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     }
 
     private fun populateFieldsWithEmployeeData(employee: Employee) {
-        viewEmployeeId.text = employeeId.toEditable()
-        viewFirstName.text = employee.firstName.toEditable()
-        viewLastName.text = employee.lastName.toEditable()
-        viewDOB.text = employee.dateOfBirth.toEditable()
+        view_employee_id_edit_text.text = employeeId.toEditable()
+        view_first_name_edit_text.text = employee.firstName.toEditable()
+        view_last_name_edit_text.text = employee.lastName.toEditable()
+        view_dob_edit_text.text = employee.dateOfBirth.toEditable()
 
         selectedRole = employee.role
-        roleSpinner.setSelection(arrayAdapter.getPosition(selectedRole))
+        view_role_spinner.setSelection(arrayAdapter.getPosition(selectedRole))
 
-        viewJobTitle.text = employee.jobTitle.toEditable()
-        viewSalary.text = employee.salary.toEditable()
+        view_job_title_edit_text.text = employee.jobTitle.toEditable()
+        view_salary_edit_text.text = employee.salary.toEditable()
     }
 
 
@@ -197,7 +177,7 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 Log.w("SSTechnos", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        databaseReference.addValueEventListener(viewContactInfoListener)
+        databaseReference.addListenerForSingleValueEvent(viewContactInfoListener)
     }
 
     private fun populateFieldsWithContactInfo(contactInfoSnapshot: ContactInfo) {
@@ -222,15 +202,16 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun editEmployee() {
         val editedEmployee = Employee(
-            viewEmployeeId.text.toString(),
-            viewFirstName.text.toString(),
-            viewLastName.text.toString(),
-            viewDOB.text.toString(),
-            selectedRole,
-            viewJobTitle.text.toString(),
-            viewSalary.text.toString(), ""
-        )
-        databaseReference.child("employees").child(employeeId).setValue(editedEmployee).addOnSuccessListener {
+            view_employee_id_edit_text.text.toString(),
+            view_first_name_edit_text.text.toString(),
+            view_last_name_edit_text.text.toString(),
+            view_dob_edit_text.text.toString(),
+            view_role_spinner.selectedItem as Role,
+            view_job_title_edit_text.text.toString(),
+            view_salary_edit_text.text.toString(),
+            username)
+
+        databaseReference.child("employees").child(employeeId).child("Employee").setValue(editedEmployee).addOnSuccessListener {
             Log.d("SSTechnos", "Employee successfuly updated in the database.")
         }.addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
     }
@@ -240,5 +221,13 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         onBackPressed()
         return true
+    }
+
+    fun getDeleteDialog(): SweetAlertDialog {
+        return this.deleteDialog
+    }
+
+    fun getEditDialog(): SweetAlertDialog {
+        return this.editDialog
     }
 }

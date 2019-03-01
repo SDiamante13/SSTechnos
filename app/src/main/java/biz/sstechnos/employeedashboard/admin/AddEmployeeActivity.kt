@@ -53,36 +53,36 @@ class AddEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     }
 
     private fun setUpSpinnerAdapter() {
-        roleSpinner!!.onItemSelectedListener = this
+        view_role_spinner!!.onItemSelectedListener = this
         // Create an ArrayAdapter using a simple spinner layout and array
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
         // Set layout to use when the list of choices appear
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
-        roleSpinner!!.adapter = arrayAdapter
+        view_role_spinner!!.adapter = arrayAdapter
     }
 
     private fun addEmployee() {
-        val employee =  Employee(viewEmployeeId_editText.text.toString(),
-            viewFirstName_editText.text.toString(),
-            viewLastName_editText.text.toString(),
-            viewDOB_editText.text.toString(),
+        val employee =  Employee(view_employee_id_edit_text.text.toString(),
+            view_first_name_edit_text.text.toString(),
+            view_last_name_edit_text.text.toString(),
+            view_dob_edit_text.text.toString(),
             selectedRole,
-            viewJobTitle_editText.text.toString(),
-            viewSalary_editText.text.toString(), "")
+            view_job_title_edit_text.text.toString(),
+            view_salary_edit_text.text.toString(), "")
 
-        databaseReference.child("employees").child(employee.employeeId).setValue(employee)
+        databaseReference.child("employees").child(employee.employeeId).child("Employee").setValue(employee)
             .addOnSuccessListener { Log.d("SSTechnos", "Employee saved successfully to the database.") }
             .addOnFailureListener { Log.d("SSTechnos", "" + it.message) }
     }
 
     private fun allFieldsValid() : Boolean {
-        return  viewEmployeeId_editText.text.toString().isNotEmpty() &&
-                viewFirstName_editText.text.toString().isNotEmpty() &&
-                viewLastName_editText.text.toString().isNotEmpty() &&
-                viewDOB_editText.text.toString().isNotEmpty() &&
-                viewJobTitle_editText.text.toString().isNotEmpty() &&
-                viewSalary_editText.text.toString().isNotEmpty()
+        return  view_employee_id_edit_text.text.toString().isNotEmpty() &&
+                view_first_name_edit_text.text.toString().isNotEmpty() &&
+                view_last_name_edit_text.text.toString().isNotEmpty() &&
+                view_dob_edit_text.text.toString().isNotEmpty() &&
+                view_job_title_edit_text.text.toString().isNotEmpty() &&
+                view_salary_edit_text.text.toString().isNotEmpty()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

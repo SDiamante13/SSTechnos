@@ -41,8 +41,8 @@
 
                 <ImageButton
                         android:id="@+id/image_button_timesheet"
-                        android:layout_width="75dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:src="@drawable/ic_timesheet"/>
             </LinearLayout>
@@ -59,14 +59,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewEmployeeId_label"
+                            android:id="@+id/view_employee_id_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/employeeId"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewEmployeeId_editText"
+                            android:id="@+id/view_employee_id_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -82,14 +82,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewFirstName_label"
+                            android:id="@+id/view_first_name_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/firstName"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewFirstName_editText"
+                            android:id="@+id/view_first_name_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -105,14 +105,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewLastName_label"
+                            android:id="@+id/view_last_name_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/lastName"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewLastName_editText"
+                            android:id="@+id/view_last_name_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -128,14 +128,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewDOB_label"
+                            android:id="@+id/view_dob_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/dateOfBirth"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewDOB_editText"
+                            android:id="@+id/view_dob_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -151,7 +151,7 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewRole_label"
+                            android:id="@+id/view_role_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
@@ -159,7 +159,7 @@
                             style="@style/body"/>
 
                     <Spinner
-                            android:id="@+id/roleSpinner"
+                            android:id="@+id/view_role_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -172,14 +172,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewJobTitle_label"
+                            android:id="@+id/view_job_title_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/jobTitle"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewJobTitle_editText"
+                            android:id="@+id/view_job_title_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -195,14 +195,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <TextView
-                            android:id="@+id/viewSalary_label"
+                            android:id="@+id/view_salary_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:text="@string/salary"
                             style="@style/body"/>
                     <EditText
-                            android:id="@+id/viewSalary_editText"
+                            android:id="@+id/view_salary_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -219,14 +219,14 @@
                         android:orientation="horizontal"
                         android:padding="20dp">
                     <ImageView
-                            android:id="@+id/govId_img"
+                            android:id="@+id/gov_id_image"
                             android:src="@drawable/ic_left_arrow"
                             android:layout_weight="2"
                             android:layout_width="70dp"
                             android:layout_height="50dp"
                             android:layout_marginStart="20dp"/>
                     <ImageView
-                            android:id="@+id/otherId_img"
+                            android:id="@+id/other_id_image"
                             android:src="@drawable/ic_right_arrow"
                             android:layout_weight="2"
                             android:layout_width="70dp"
@@ -287,7 +287,7 @@
                         style="@style/ButtonStyle"
                         android:text="@string/create"/>
                 <Button
-                        android:id="@+id/saveChanges_employee_button"
+                        android:id="@+id/save_employee_button"
                         android:visibility="gone"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
