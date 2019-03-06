@@ -1,6 +1,5 @@
 package biz.sstechnos.employeedashboard.dashboard
 
-import android.content.Context
 import android.content.Intent
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -10,7 +9,6 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import biz.sstechnos.employeedashboard.LoginActivity
 import biz.sstechnos.employeedashboard.admin.EmployeeListingsActivity
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
 import com.google.common.truth.Truth.assertThat
@@ -35,8 +33,11 @@ class DashboardActivityTest: KoinTest{
     private val mockDataSnapshot: DataSnapshot = mockk(relaxed = true)
 
     private lateinit var scenario : ActivityScenario<DashboardActivity>
-    private lateinit var loginContext : Context
-    private lateinit var email : String
+    private val email = "email@test.com"
+
+    private val intent: Intent = Intent().putExtra("USER_EMAIL", email)
+        .setClassName("biz.sstechnos.employeedashboard.dashboard",
+            "biz.sstechnos.employeedashboard.dashboard.DashboardActivity")
 
     @Before
     fun setUp() {
@@ -44,10 +45,7 @@ class DashboardActivityTest: KoinTest{
             single("databaseReference") { mockDatabaseReference }
         })
 
-        val loginScenario = launch(LoginActivity::class.java)
-        loginScenario.onActivity { activity -> loginContext = activity.applicationContext  }
-        email = "email@test.com"
-        scenario = launch(Intent(loginContext, DashboardActivity::class.java).putExtra("USER_EMAIL", email))
+        scenario = launch(intent)
     }
 
     @After

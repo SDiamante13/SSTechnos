@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import biz.sstechnos.employeedashboard.R
-import biz.sstechnos.employeedashboard.employee.DocumentAdapter
 import biz.sstechnos.employeedashboard.entity.Employee
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

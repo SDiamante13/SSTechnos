@@ -29,8 +29,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.dsl.module.module
-import org.koin.standalone.StandAloneContext
 import org.koin.standalone.StandAloneContext.loadKoinModules
+import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
@@ -72,7 +72,7 @@ class ViewEmployeeActivityTest: KoinTest {
     @After
     fun tearDown() {
         clearAllMocks()
-        StandAloneContext.stopKoin()
+        stopKoin()
     }
 
     @Test
