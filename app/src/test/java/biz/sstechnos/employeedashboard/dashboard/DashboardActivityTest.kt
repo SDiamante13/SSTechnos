@@ -3,19 +3,28 @@ package biz.sstechnos.employeedashboard.dashboard
 import android.content.Intent
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.admin.EmployeeListingsActivity
+import biz.sstechnos.employeedashboard.admin.upload.UploadDocumentsActivity
 import biz.sstechnos.employeedashboard.employee.TimeSheetActivity
+import biz.sstechnos.employeedashboard.employee.ViewDocumentsActivity
+import biz.sstechnos.employeedashboard.entity.Employee
+import biz.sstechnos.employeedashboard.entity.Role
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import io.mockk.clearAllMocks
+import io.mockk.every
 import io.mockk.mockk
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -27,17 +36,38 @@ import org.koin.test.KoinTest
 
 
 @RunWith(AndroidJUnit4::class)
-class DashboardActivityTest: KoinTest{
+class DashboardActivityTest: KoinTest {
 
-    private val mockDatabaseReference: DatabaseReference = mockk(relaxed = true)
-    private val mockDataSnapshot: DataSnapshot = mockk(relaxed = true)
+    private val mockDatabaseReference: DatabaseReference = mockk()
+    private val mockDataSnapshot: DataSnapshot = mockk()
+    private val mockChildren = mutableListOf(mockDataSnapshot, mockDataSnapshot)
 
-    private lateinit var scenario : ActivityScenario<DashboardActivity>
-    private val email = "email@test.com"
+    private val adminUser = Employee(
+        "SST501",
+        "Sherlock",
+        "Holmes",
+        "16/05/1923",
+        Role.ADMIN,
+        "Detective",
+        "100000",
+        "sholmes401@gmail.com"
+    )
 
-    private val intent: Intent = Intent().putExtra("USER_EMAIL", email)
-        .setClassName("biz.sstechnos.employeedashboard.dashboard",
-            "biz.sstechnos.employeedashboard.dashboard.DashboardActivity")
+    private val employeeUser = Employee(
+        "SST701",
+        "Test",
+        "User",
+        "17/08/1991",
+        Role.EMPLOYEE,
+        "Developer",
+        "55000",
+        "email@test.com"
+    )
+
+
+    private lateinit var scenario: ActivityScenario<DashboardActivity>
+
+    private var intent: Intent = Intent()
 
     @Before
     fun setUp() {
@@ -45,58 +75,95 @@ class DashboardActivityTest: KoinTest{
             single("databaseReference") { mockDatabaseReference }
         })
 
-        scenario = launch(intent)
+        mockEverything()
     }
 
     @After
     fun tearDown() {
         clearAllMocks()
-        scenario.moveToState(Lifecycle.State.DESTROYED)
         stopKoin()
     }
 
     @Test
-    fun `current user has correct email`() {
-        scenario.onActivity {
-                activity ->
-            assertThat(activity.userEmail).isEqualTo(email)
-        }
-    }
-
-    @Test
     fun `employee role only shows employee container buttons`() {
-        scenario.onActivity {
-                activity ->
-            activity.onDataChange(mockDataSnapshot)
-            assertThat(activity.employeeListingsContainer.visibility).isEqualTo(GONE)
-            assertThat(activity.viewTimeSheetsContainer.visibility).isEqualTo(GONE)
-            assertThat(activity.uploadDocumentsContainer.visibility).isEqualTo(GONE)
+        startActivityWithUsername(employeeUser.username!!)
+
+        scenario.onActivity { activity ->
+            assertThat(activity.employee_listings_container.visibility).isEqualTo(GONE)
+            assertThat(activity.view_timesheets_container.visibility).isEqualTo(GONE)
+            assertThat(activity.upload_documents_container.visibility).isEqualTo(GONE)
         }
     }
 
     @Test
     fun `admin role shows all buttons`() {
-        scenario.onActivity {
-                activity ->
-            assertThat(activity.employeeListingsContainer.visibility).isEqualTo(VISIBLE)
-            assertThat(activity.viewTimeSheetsContainer.visibility).isEqualTo(VISIBLE)
-            assertThat(activity.uploadDocumentsContainer.visibility).isEqualTo(VISIBLE)
+        startActivityWithUsername(adminUser.username!!)
+
+        scenario.onActivity { activity ->
+            assertThat(activity.employee_listings_container.visibility).isEqualTo(VISIBLE)
+            assertThat(activity.view_timesheets_container.visibility).isEqualTo(VISIBLE)
+            assertThat(activity.upload_documents_container.visibility).isEqualTo(VISIBLE)
         }
     }
 
     @Test
     fun `clicking on employee listings button goes to EmployeeListingsActivity`() {
+        startActivityWithUsername(adminUser.username!!)
+
         init()
-        scenario.onActivity { activity -> activity.employeeListingsContainer.performClick() }
+        onView(withId(R.id.employee_listings_container)).perform(click())
         intended(hasComponent(EmployeeListingsActivity::class.java.canonicalName))
         release()
     }
 
     @Test
-    fun `clicking on enter time sheet button goes to TimeSheetActivity`() {
+    fun `clicking on upload documents button goes to UploadDocumentsActivity`() {
+        startActivityWithUsername(adminUser.username!!)
+
         init()
-        scenario.onActivity { activity -> activity.enterTimesheetsContainer.performClick() }
+        onView(withId(R.id.upload_documents_container)).perform(click())
+        intended(hasComponent(UploadDocumentsActivity::class.java.canonicalName))
+        release()
+    }
+
+    @Test
+    fun `clicking on enter time sheet button goes to TimeSheetActivity`() {
+        startActivityWithUsername(employeeUser.username!!)
+
+        init()
+        onView(withId(R.id.enter_timesheets_container)).perform(click())
         intended(hasComponent(TimeSheetActivity::class.java.canonicalName))
         release()
+    }
+
+    @Test
+    fun `clicking on view documents button goes to ViewDocumentsActivity`() {
+        startActivityWithUsername(adminUser.username!!)
+
+        init()
+        onView(withId(R.id.view_documents_container)).perform(click())
+        intended(hasComponent(ViewDocumentsActivity::class.java.canonicalName))
+        release()
+    }
+
+    private fun mockEverything() {
+        every { mockDatabaseReference.child(any()) } returns mockDatabaseReference
+        every { mockDatabaseReference.addValueEventListener(any()) } returns mockk()
+        every { mockDataSnapshot.child(any()) } returns mockDataSnapshot
+        every { mockDataSnapshot.getValue(Employee::class.java) } returnsMany mutableListOf(adminUser, employeeUser)
+        every { mockDataSnapshot.children } returns mockChildren
+    }
+
+    private fun startActivityWithUsername(email: String) {
+        intent.putExtra("USER_EMAIL", email)
+            .setClassName(
+                "biz.sstechnos.employeedashboard.dashboard",
+                "biz.sstechnos.employeedashboard.dashboard.DashboardActivity"
+            )
+
+        scenario = launch(intent)
+        scenario.onActivity { activity ->
+            activity.onDataChange(mockDataSnapshot)
+        }
     }
 }

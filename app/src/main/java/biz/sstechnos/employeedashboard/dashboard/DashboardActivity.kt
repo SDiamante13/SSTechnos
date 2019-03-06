@@ -30,14 +30,9 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
     private val databaseReference: DatabaseReference by inject()
 
-    var employeeList = mutableListOf<Employee>()
+    private var employeeList = mutableListOf<Employee>()
 
-    lateinit var userEmail : String
-
-    lateinit var employeeListingsContainer : RelativeLayout
-    lateinit var viewTimeSheetsContainer : RelativeLayout
-    lateinit var uploadDocumentsContainer : RelativeLayout
-    lateinit var enterTimesheetsContainer : RelativeLayout
+    private lateinit var userEmail: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +45,6 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
 
         progress_spinner.visibility = VISIBLE
         top_view.visibility = GONE
-
-        employeeListingsContainer = employee_listings_container
-        viewTimeSheetsContainer = view_timesheets_container
-        uploadDocumentsContainer = upload_documents_container
-        enterTimesheetsContainer = enter_timesheets_container
 
         databaseReference.child("employees").addValueEventListener(this)
 
@@ -85,7 +75,7 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         }
     }
 
-    override fun onDataChange(dataSnapshot : DataSnapshot?) {
+    override fun onDataChange(dataSnapshot: DataSnapshot?) {
         var employeeId = "UNDEFINED"
         var role = Role.EMPLOYEE
         var firstName = ""
@@ -104,9 +94,7 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
         }
         if (employeeId.isNotEmpty()) {
             if (role == Role.EMPLOYEE) {
-                employeeListingsContainer.visibility = GONE
-                viewTimeSheetsContainer.visibility = GONE
-                uploadDocumentsContainer.visibility = GONE
+                hideAdminButtons()
             }
 
             name_header.text = "$firstName $lastName"
@@ -149,5 +137,11 @@ class DashboardActivity : AppCompatActivity(), ValueEventListener {
             else -> onBackPressed()
         }
         return true
+    }
+
+    private fun hideAdminButtons() {
+        employee_listings_container.visibility = GONE
+        view_timesheets_container.visibility = GONE
+        upload_documents_container.visibility = GONE
     }
 }
