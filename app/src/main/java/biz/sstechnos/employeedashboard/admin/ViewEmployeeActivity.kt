@@ -132,6 +132,8 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         }
 
         save_employee_button.setOnClickListener {
+
+            // TODO only show dialog if data has been changed or fields have been enabled
             editDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
                 .setTitleText(getString(R.string.update_employee_title))
                 .setContentText(getString(R.string.update_employee_message))
@@ -145,6 +147,8 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             editDialog.show()
         }
     }
+
+    // TODO Load gov id documents to image views using Picasso
 
     private fun toggleEditFields(isEnabled: Boolean) {
         view_first_name_edit_text.isEnabled = isEnabled
@@ -272,6 +276,8 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             view_job_title_edit_text.text.toString(),
             view_salary_edit_text.text.toString(),
             username
+
+        // TODO check for contact info as well
         )
 
         databaseReference.child("employees").child(employeeId).child("Employee").setValue(editedEmployee)

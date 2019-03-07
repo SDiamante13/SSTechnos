@@ -19,221 +19,206 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="30dp"
-                android:paddingBottom="40dp">
+                android:paddingBottom="64dp">
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="16dp">
-
-                <TextView
-                        android:id="@+id/employee_information_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_gravity="center_vertical"
-                        style="@style/bodyCasualBold"
-                        android:textSize="20dp"
-                        android:text="Employee Information"/>
-
-                <ImageButton
-                        android:id="@+id/image_button_timesheet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:src="@drawable/ic_timesheet"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/employee_details_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:layout_marginStart="10dp">
 
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="20dp">
+
                     <TextView
-                            android:id="@+id/view_employee_id_label"
+                            android:id="@+id/employee_information_header"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/employeeId"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_employee_id_edit_text"
+                            android:layout_gravity="center_vertical"
+                            style="@style/bodyCasualBold"
+                            android:textSize="20dp"
+                            android:text="Employee Information"/>
+
+                    <ImageButton
+                            android:id="@+id/image_button_timesheet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:src="@drawable/ic_timesheet"/>
+                </LinearLayout>
+
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="Employee Id"
-                            android:inputType="text"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_employee_id_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/employeeId"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_employee_id_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="Employee Id"
+                                android:inputType="text"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_first_name_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/firstName"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_first_name_edit_text"
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="First Name"
-                            android:inputType="text"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_first_name_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/firstName"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_first_name_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="First Name"
+                                android:inputType="text"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_last_name_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/lastName"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_last_name_edit_text"
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="Last Name"
-                            android:inputType="text"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_last_name_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/lastName"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_last_name_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="Last Name"
+                                android:inputType="text"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_dob_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/dateOfBirth"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_dob_edit_text"
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="DOB: 22/11/17"
-                            android:inputType="date"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_dob_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/dateOfBirth"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_dob_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="DOB: 22/11/17"
+                                android:inputType="date"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_role_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/role"
-                            style="@style/body"/>
-
-                    <Spinner
-                            android:id="@+id/view_role_spinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAlignment="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_job_title_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/jobTitle"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_job_title_edit_text"
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="Job Title"
-                            android:inputType="text"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_role_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/role"
+                                style="@style/body"/>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <TextView
-                            android:id="@+id/view_salary_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/salary"
-                            style="@style/body"/>
-                    <EditText
-                            android:id="@+id/view_salary_edit_text"
+                        <Spinner
+                                android:id="@+id/view_role_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textAlignment="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="30dp"
-                            android:hint="Salary (Rs.) per month"
-                            android:inputType="number"/>
-                </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_job_title_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/jobTitle"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_job_title_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="Job Title"
+                                android:inputType="text"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="4"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-                    <ImageView
-                            android:id="@+id/gov_id_image"
-                            android:src="@drawable/ic_left_arrow"
-                            android:layout_weight="2"
-                            android:layout_width="70dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"/>
-                    <ImageView
-                            android:id="@+id/other_id_image"
-                            android:src="@drawable/ic_right_arrow"
-                            android:layout_weight="2"
-                            android:layout_width="70dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="20dp"/>
-                </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <TextView
+                                android:id="@+id/view_salary_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="@string/salary"
+                                style="@style/body"/>
+                        <EditText
+                                android:id="@+id/view_salary_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="Salary (Rs.) per month"
+                                android:inputType="number"/>
+                    </LinearLayout>
 
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="4"
+                            android:orientation="horizontal"
+                            android:padding="20dp">
+                        <ImageView
+                                android:id="@+id/gov_id_image"
+                                android:src="@drawable/ic_left_arrow"
+                                android:layout_weight="2"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_marginStart="20dp"/>
+                        <ImageView
+                                android:id="@+id/other_id_image"
+                                android:src="@drawable/ic_right_arrow"
+                                android:layout_weight="2"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_marginEnd="20dp"/>
+                    </LinearLayout>
             </LinearLayout>
 
             <include
@@ -244,7 +229,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:padding="20dp"
                     android:orientation="horizontal">
 
                 <Button
@@ -253,9 +238,6 @@
                         android:layout_width="40dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
                         style="@style/ButtonStyle"
                         android:text="@string/edit"/>
 
@@ -265,9 +247,7 @@
                         android:layout_width="40dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
                         style="@style/ButtonStyle"
                         android:text="@string/delete"/>
             </LinearLayout>
@@ -275,6 +255,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="20dp"
                     android:orientation="horizontal">
 
                 <Button
@@ -282,8 +263,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
                         style="@style/ButtonStyle"
                         android:text="@string/create"/>
                 <Button
@@ -292,13 +271,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
                         style="@style/ButtonStyle"
                         android:text="@string/save_changes"/>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
     <include
