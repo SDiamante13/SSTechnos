@@ -120,7 +120,7 @@ class ViewEmployeeActivityTest: KoinTest {
     }
 
     @Test
-    fun `edit employee button enables all fields`() {
+    fun `edit employee button enables all fields except for employee id`() {
         scenario.onActivity { activity -> activity.onDataChange(mockDataSnapshot) }
 
         onView(withId(R.id.view_employee_id_edit_text)).check(matches(not(isEnabled())))
@@ -169,9 +169,7 @@ class ViewEmployeeActivityTest: KoinTest {
         verify(exactly = 1) { mockDatabaseReference.setValue(editedEmployee) }
     }
 
-    // TODO add ability to edit Contact Info here
-    // TODO design layout for contact info
-
+    // TODO add tests for editing contact info
 
     private fun mockEverything() {
         every { mockDataSnapshot.child(any()) } returns mockDataSnapshot

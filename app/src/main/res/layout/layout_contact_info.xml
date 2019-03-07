@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/contact_info_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,65 +17,192 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="10dp">
 
-        <TextView
-                android:id="@+id/contact_info_header"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
-                style="@style/bodyCasualBold"
-                android:textSize="20dp"
-                android:text="Contact Information"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="16dp">
 
-        <TextView
-                android:id="@+id/email_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
-        <TextView
-                android:id="@+id/address_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
+            <TextView
+                    android:id="@+id/contact_info_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    style="@style/bodyCasualBold"
+                    android:textSize="20dp"
+                    android:text="Contact Information"/>
 
-        <TextView
-                android:id="@+id/phoneNumber_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/emergency_contact"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                style="@style/title"
-                android:textStyle="bold"/>
-        <TextView
-                android:id="@+id/emergencyContact_firstName_text"
+        <LinearLayout
+                android:id="@+id/employee_details_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
-        <TextView
-                android:id="@+id/emergencyContact_lastName_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
-        <TextView
-                android:id="@+id/emergencyContact_relationship_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-               style="@style/body"
-                android:layout_marginBottom="16dp"/>
-        <TextView
-                android:id="@+id/emergencyContact_phoneNumber_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               style="@style/body"/>
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/email_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/email_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Email Address"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/address_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/address_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Street Address"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/phone_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/phone_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="123-456-7890"
+                        android:inputType="phone"/>
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/emergency_contact_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    style="@style/bodyCasualBold"
+                    android:textSize="18dp"
+                    android:text="@string/emergency_contact"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/emergency_first_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_name_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/emergency_first_name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="George"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/emergency_last_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_name_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/emergency_last_name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="Harrison"
+                        android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/emergency_relationship_spinner_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/relationship_label"
+                        style="@style/body"/>
+                <Spinner
+                        android:id="@+id/emergency_relationship_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:textAlignment="center"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+                <TextView
+                        android:id="@+id/emergency_phone_number_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/relationship_label"
+                        style="@style/body"/>
+                <EditText
+                        android:id="@+id/emergency_phone_number_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:hint="123-456-7890"
+                        android:inputType="phone"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
