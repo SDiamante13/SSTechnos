@@ -13,6 +13,8 @@ import android.widget.Toast
 import biz.sstechnos.employeedashboard.R
 import biz.sstechnos.employeedashboard.entity.Timesheet
 import biz.sstechnos.employeedashboard.entity.Week
+import biz.sstechnos.employeedashboard.utils.SweetDialogUtil
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -99,24 +101,18 @@ class TimeSheetActivity : AppCompatActivity() {
         }
 
         timesheet_approveButton.setOnClickListener {
-            val builder = AlertDialog.Builder(this@TimeSheetActivity)
-            builder.setTitle("Approve Timesheet")
-            builder.setMessage("Would you like to approve this timesheet?")
-            builder.setPositiveButton("YES") { _, _ ->
-                approveTimesheet(timesheetId, true)
-                Toast.makeText(this, "Timesheet approved", Toast.LENGTH_SHORT).show()
-            }
+            val approveDialog = SweetDialogUtil.makeSweetDialog(this, SweetAlertDialog.NORMAL_TYPE, false,
+                "", getString(R.string.approve_timesheet_message))
+                .setConfirmButton(R.string.yes) {
+                    approveTimesheet(timesheetId, true)
+                    Toast.makeText(this, "Timesheet approved", Toast.LENGTH_SHORT).show()
+                }
+                .setCancelButton(R.string.no) {
+                    approveTimesheet(timesheetId, false)
+                    Toast.makeText(this, "Timesheet not approved", Toast.LENGTH_SHORT).show()
+                }
 
-            builder.setNeutralButton("No") { _, _ ->
-                approveTimesheet(timesheetId, false)
-                Toast.makeText(this, "Timesheet not approved", Toast.LENGTH_SHORT).show()
-            }
-
-            builder.setNeutralButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-
-            builder.create().show()
+            approveDialog.show()
         }
 
         if(adminView) {

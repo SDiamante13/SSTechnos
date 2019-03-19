@@ -17,6 +17,7 @@ import biz.sstechnos.employeedashboard.entity.ContactInfo
 import biz.sstechnos.employeedashboard.entity.Employee
 import biz.sstechnos.employeedashboard.entity.Relationship
 import biz.sstechnos.employeedashboard.entity.Role
+import biz.sstechnos.employeedashboard.utils.SweetDialogUtil
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -113,9 +114,8 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         save_employee_button.visibility = VISIBLE
 
         delete_employee_button.setOnClickListener {
-            deleteDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText(getString(R.string.delete_employee_title))
-                .setContentText(getString(R.string.delete_employee_message))
+            deleteDialog = SweetDialogUtil.makeSweetDialog(this, SweetAlertDialog.WARNING_TYPE, false,
+                getString(R.string.delete_employee_title), getString(R.string.delete_employee_message))
                 .setConfirmButton(R.string.yes) {
                     deleteEmployee()
                     finish()
@@ -134,16 +134,15 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         save_employee_button.setOnClickListener {
 
             // TODO only show dialog if data has been changed or fields have been enabled
-            editDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-                .setTitleText(getString(R.string.update_employee_title))
-                .setContentText(getString(R.string.update_employee_message))
+            editDialog = SweetDialogUtil.makeSweetDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE,
+                true, "", getString(R.string.update_employee_message))
+                .setCustomImage(R.drawable.ic_update)
                 .setConfirmButton(R.string.yes) {
                     editEmployee()
                     finish()
                 }
-                .setCancelButton(R.string.no) { dialog ->
-                    dialog.cancel()
-                }
+                .setCancelButton(R.string.no) { dialog -> dialog.cancel() }
+
             editDialog.show()
         }
     }
@@ -276,9 +275,13 @@ class ViewEmployeeActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             view_job_title_edit_text.text.toString(),
             view_salary_edit_text.text.toString(),
             username
-
-        // TODO check for contact info as well
         )
+        // TODO add address fields to contact layout
+//        val contactInfo = ContactInfo(
+//            email_edit_text.text.toString(),
+//
+//            )
+        // TODO check for contact info as well
 
         databaseReference.child("employees").child(employeeId).child("Employee").setValue(editedEmployee)
             .addOnSuccessListener {

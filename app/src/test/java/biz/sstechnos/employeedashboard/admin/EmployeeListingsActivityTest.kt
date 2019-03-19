@@ -139,10 +139,10 @@ class EmployeeListingsActivityTest {
         }
         intended(IntentMatchers.hasComponent(ViewEmployeeActivity::class.java.canonicalName))
         release()
+    }
 
-//        init() TODO use for demo
+//        init()
 //        onView(withId(R.id.employee_list_view)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())))
 //        intended(IntentMatchers.hasComponent(ViewEmployeeActivity::class.java.canonicalName))
 //        release()
-    }
 }

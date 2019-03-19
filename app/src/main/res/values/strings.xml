@@ -53,11 +53,12 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="update_employee_title">Update Employee</string>
-    <string name="update_employee_message">Are you sure you want to update\nthis employee in the database?</string>
+    <string name="update_employee_message">Are you sure you want to update this employee in the database?</string>
     <string name="email_label">Email:</string>
     <string name="address_label">Address:</string>
     <string name="phone_label">Phone #:</string>
     <string name="first_name_label">First Name:</string>
     <string name="last_name_label">Last Name:</string>
     <string name="relationship_label">Relationship:</string>
+    <string name="approve_timesheet_message">Would you like to approve this timesheet?</string>
 </resources>

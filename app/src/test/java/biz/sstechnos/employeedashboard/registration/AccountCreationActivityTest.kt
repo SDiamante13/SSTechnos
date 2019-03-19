@@ -52,10 +52,13 @@ class AccountCreationActivityTest: KoinTest {
 
 //        every { mockFirebaseAuth.createUserWithEmailAndPassword(any(), any()) } returns mockAuthTask
 //        every { mockFirebaseAuth.currentUser } returns mockFirebaseUser
+//        every { mockDatabaseReference.child(any()) } returns mockDatabaseReference
+//        every { mockDatabaseReference.setValue(any()) } returns mockVoidTask
 //        every { mockAuthTask.addOnCompleteListener(any()) } returns mockAuthTask
 //        every { mockFirebaseUser.sendEmailVerification() } returns mockVoidTask
 //        every { mockFirebaseUser.email } returns "test@gmail.com"
 //        every { mockVoidTask.addOnSuccessListener(any()) } returns mockVoidTask
+//        every { mockVoidTask.addOnFailureListener(any()) } returns mockVoidTask
     }
 
     @After

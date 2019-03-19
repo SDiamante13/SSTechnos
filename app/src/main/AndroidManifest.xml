@@ -47,8 +47,6 @@
         </activity>
         <activity android:name=".employee.ViewDocumentsActivity">
         </activity>
-        <activity android:name=".dashboard.ViewContactInfoActivity">
-        </activity>
     </application>
 
 </manifest>

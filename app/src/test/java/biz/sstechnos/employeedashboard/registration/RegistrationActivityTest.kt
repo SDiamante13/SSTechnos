@@ -24,8 +24,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.dsl.module.module
-import org.koin.standalone.StandAloneContext
 import org.koin.standalone.StandAloneContext.loadKoinModules
+import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.test.KoinTest
 
 
@@ -61,7 +61,7 @@ class RegistrationActivityTest: KoinTest {
     fun tearDown() {
         clearAllMocks()
         scenario.moveToState(Lifecycle.State.DESTROYED)
-        StandAloneContext.stopKoin()
+        stopKoin()
     }
 
     @Test
